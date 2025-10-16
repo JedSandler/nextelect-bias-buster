@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>NextElect Bias Buster</title>
+    <title>NextElect — Issue of the Week</title>
     <style>
-        /* Reset & base */
+        /* ============ Theme ============ */
         * {
             margin: 0;
             padding: 0;
@@ -31,6 +31,7 @@
             --accent: #e6e6e6;
             --card: #2b2f36;
             --card-border: #3a3e47;
+            --link: #9ecbff;
         }
 
         body {
@@ -46,49 +47,34 @@
             display: none !important
         }
 
-        /* Center wrapper */
-        .center-wrap {
+        .center {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            padding: 12px 12px 24px;
+            padding: 12px 12px 24px
         }
 
         .screen {
             width: 100%;
-            max-width: 820px;
-            text-align: center;
-            margin: 0 auto;
+            max-width: 920px;
+            margin: 0 auto
         }
 
-        /* Brand */
         .brand {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: .8rem;
+            margin: 0 0 10px
         }
 
         .brand img {
-            height: 72px;
+            height: 64px
         }
 
         .brand .logo {
-            font-size: 2.8rem;
-        }
-
-        .brand--intro {
-            margin: 0 0 16px;
-        }
-
-        .brand--game {
-            margin: 0 0 8px;
-        }
-
-        .brand--result {
-            margin: -6px 0 10px;
+            font-size: 2.2rem
         }
 
         /* Buttons */
@@ -109,273 +95,99 @@
 
         .btn:hover {
             background: #3b3e46;
-            transform: translateY(-1px);
+            transform: translateY(-1px)
         }
 
         .btn.small {
             padding: .6rem 1rem;
-            font-size: .95rem;
+            font-size: .95rem
         }
 
         .btn-row {
             display: flex;
             gap: .6rem;
-            justify-content: center;
-            margin-top: .8rem;
             flex-wrap: wrap;
-        }
-
-        /* Side buttons */
-        .side-buttons {
-            position: fixed;
-            right: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 15;
-        }
-
-        .circle-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: #34363d;
-            color: var(--fg);
-            border: 1px solid #474a53;
-            cursor: pointer;
-            font-size: 1.1rem;
-            line-height: 44px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
-        }
-
-        .circle-btn:hover {
-            background: #3b3e46;
-        }
-
-        /* Modal base */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .55);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 20;
+            margin-top: .8rem
         }
 
-        .modal-content {
-            position: relative;
-            background: #2e3138;
-            color: var(--fg);
-            padding: 1.4rem 1.6rem 1rem;
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            width: min(96%, 1000px);
-            text-align: left;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
-            animation: fadeIn .25s ease-out;
-        }
-
-        .modal-content h2 {
-            font-size: 1.3rem;
-            margin-bottom: .6rem;
-        }
-
-        .modal-content p {
-            color: var(--muted);
-            margin: .35rem 0;
-            line-height: 1.45;
-        }
-
-        .modal-content a {
-            color: #9ecbff;
-            text-decoration: underline;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 8px;
-            right: 10px;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            border: 1px solid #4a4f58;
-            background: transparent;
-            color: #cfd6df;
-            font-size: 18px;
-            line-height: 1;
-            cursor: pointer;
-        }
-
-        .close-btn:hover {
-            background: #393d45;
-        }
-
-        @media(min-width:700px) {
-            .modal-content p.nolines {
-                white-space: nowrap;
-            }
-        }
-
-        /* Articles list */
-        .articles-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 70vh;
-            overflow-y: auto;
-            padding-right: 6px;
-            margin-top: .6rem;
-        }
-
-        .article-card {
+        /* Card */
+        .card {
             background: var(--card);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: .9rem 1rem;
+            border-radius: 14px;
+            padding: 1rem 1rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
         }
 
-        .article-topic {
-            font-size: .85rem;
-            color: var(--muted);
-            margin-bottom: .35rem;
+        .card h2 {
+            font-size: 1.2rem;
+            margin-bottom: .6rem
         }
 
-        .article-headline {
-            font-size: 1.05rem;
+        .muted {
+            color: var(--muted)
+        }
+
+        .section {
+            margin-top: 12px
+        }
+
+        /* ===== Summary ===== */
+        .summary-title {
+            font-size: 1.15rem;
             color: #e9eef7;
-            margin-bottom: .4rem;
+            margin-bottom: .35rem
         }
 
-        .article-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .5rem;
-            font-size: .9rem;
-            color: #cdd5e2;
-        }
-
-        .article-meta .badge {
-            background: #444a57;
-            color: #eaeef6;
-            padding: .12rem .5rem;
-            border-radius: 999px;
-            font-size: .8em;
-        }
-
-        .article-link a {
-            color: #9ecbff;
-            text-decoration: underline;
-        }
-
-        /* Explanations block (read-only) */
-        .expl-block {
-            margin-top: .6rem;
-            background: #23262c;
-            border: 1px solid #464b55;
-            border-radius: 10px;
-            padding: .7rem .8rem;
-        }
-
-        .expl-title {
-            font-size: .9rem;
-            color: #cfd6df;
-            margin-bottom: .25rem;
-        }
-
-        .expl-text {
-            font-size: .95rem;
+        .summary-text {
             color: #e9eef7;
-            white-space: pre-wrap;
-            line-height: 1.45;
+            line-height: 1.5;
+            white-space: pre-wrap
         }
 
-        /* Progress + topic label */
+        /* ===== Bias Buster (1 round) ===== */
         .progress-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: .75rem;
-            margin-bottom: .5rem;
+            margin-bottom: .5rem
         }
 
         .topic-label {
             font-size: 1rem;
-            color: var(--muted);
-            text-align: left;
+            color: var(--muted)
         }
 
-        .progress-container {
+        .progress-bar-wrap {
             flex: 1;
             height: 8px;
             background: #3a3d46;
             border-radius: 5px;
-            overflow: hidden;
+            overflow: hidden
         }
 
         #progress-bar {
-            width: 0%;
             height: 100%;
+            width: 0%;
             background: var(--accent);
-            transition: width .3s ease;
+            transition: width .25s ease
         }
 
         .meta-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: .75rem;
             margin: .4rem 0 .7rem;
-            color: var(--muted);
+            color: var(--muted)
         }
 
-        .streak,
-        .correctness,
-        .progress-text {
-            font-size: 1rem;
-        }
-
-        /* Topic panel animations */
-        #game-panel {
-            will-change: transform, opacity;
-        }
-
-        .slide-out-left {
-            animation: slideOutLeft .28s ease forwards;
-        }
-
-        .slide-in-right {
-            animation: slideInRight .28s ease forwards;
-        }
-
-        @keyframes slideOutLeft {
-            to {
-                transform: translateX(-24px);
-                opacity: 0;
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(24px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Boxes */
         #boxes {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: .5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1rem
         }
 
         .box {
@@ -383,16 +195,25 @@
             background: var(--tile);
             border: 1px solid var(--tile-border);
             border-radius: 12px;
-            font-size: .9rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 0 #cfcfcf;
             padding: .5rem;
             color: #202020;
             text-align: center;
-            box-shadow: 0 2px 0 #cfcfcf;
-            transition: transform .08s ease;
-            word-break: break-word;
+        }
+
+        .box.correct {
+            border-color: #28a745;
+            background: var(--green-bg);
+            color: var(--green-fg)
+        }
+
+        .box.incorrect {
+            border-color: #dc3545;
+            background: var(--red-bg);
+            color: var(--red-fg)
         }
 
         @keyframes flash {
@@ -408,22 +229,9 @@
         }
 
         .flash {
-            animation: flash .5s ease-out;
+            animation: flash .5s ease-out
         }
 
-        .box.correct {
-            border-color: #28a745;
-            background: var(--green-bg);
-            color: var(--green-fg);
-        }
-
-        .box.incorrect {
-            border-color: #dc3545;
-            background: var(--red-bg);
-            color: var(--red-fg);
-        }
-
-        /* Headline card */
         #headline {
             background: var(--tile);
             color: #111;
@@ -435,15 +243,15 @@
             min-height: 3.8rem;
             font-size: 1.2rem;
             line-height: 1.35;
-            animation: fadeInUp .22s ease-out;
+            text-align: center;
+            /* centered headline */
         }
 
-        /* Options */
         .options {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: .6rem;
-            margin: .2rem 0 1rem;
+            margin: .2rem 0 1rem
         }
 
         .option-btn {
@@ -455,15 +263,14 @@
             cursor: pointer;
             transition: transform .06s ease, background .15s ease;
             box-shadow: 0 2px 0 #cfcfcf;
-            font-weight: 600;
+            font-weight: 600
         }
 
         .option-btn:hover {
             background: #ededed;
-            transform: translateY(-1px);
+            transform: translateY(-1px)
         }
 
-        /* Shake */
         @keyframes shake {
 
             0%,
@@ -481,78 +288,119 @@
         }
 
         .shake {
-            animation: shake .22s;
+            animation: shake .22s
         }
 
-        /* Result */
-        #result-screen h1 {
-            margin: 8px 0 .4rem;
-            font-size: 2rem;
-            color: #fff;
+        .articles {
+            display: flex;
+            flex-direction: column;
+            gap: 10px
         }
 
-        #final-score,
-        #final-note {
-            font-size: 1.05rem;
-            color: var(--fg);
-            margin: .25rem 0;
+        .article {
+            background: #2e3138;
+            border: 1px solid #4a4f58;
+            border-radius: 10px;
+            padding: .7rem .8rem
         }
 
-        /* Disclaimer */
-        .disclaimer {
-            position: fixed;
-            bottom: 6px;
-            left: 0;
+        .article a {
+            color: var(--link);
+            text-decoration: underline
+        }
+
+        /* ===== Timeline ===== */
+        .tl-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .75rem;
+            flex-wrap: wrap
+        }
+
+        .lives {
+            color: #ffb3b3;
+            font-weight: 600
+        }
+
+        .event-scroll {
             width: 100%;
-            text-align: center;
-            font-size: .7rem;
-            color: #c7c7c7;
-            padding: 0 10px;
-            pointer-events: none;
-            z-index: 5;
+            overflow-x: auto
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0
-            }
-
-            to {
-                opacity: 1
-            }
+        .event-list {
+            display: flex;
+            gap: .6rem;
+            padding: .6rem;
+            margin: .6rem 0;
+            list-style: none;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0)
-            }
+        .event {
+            background: #34363d;
+            border: 1px solid #4a4f58;
+            border-radius: 12px;
+            width: 250px;
+            min-height: 120px;
+            flex: 0 0 auto;
+            cursor: grab;
+            user-select: none;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: .85rem .9rem;
+            text-align: left;
+            color: #e9eef7;
+            line-height: 1.35;
+            white-space: normal;
+            word-break: break-word;
+            transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
         }
 
-        @media(prefers-reduced-motion:reduce) {
-            * {
-                animation: none !important;
-                transition: none !important
-            }
+        .event:hover {
+            transform: translateY(-2px)
         }
 
+        .event.dragging {
+            opacity: .75
+        }
+
+        .event.correct {
+            border-color: #28a745;
+            box-shadow: 0 0 0 2px rgba(40, 167, 69, .25) inset
+        }
+
+        .event.incorrect {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 2px rgba(220, 53, 69, .25) inset
+        }
+
+        .tl-actions {
+            display: flex;
+            gap: .6rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: .5rem
+        }
+
+        .score {
+            margin-top: .5rem;
+            color: var(--muted);
+            text-align: center
+        }
+
+        /* small */
         @media(max-width:560px) {
             .brand img {
-                height: 56px
+                height: 52px
             }
 
             .brand .logo {
-                font-size: 2.2rem
+                font-size: 1.9rem
             }
 
             #headline {
-                font-size: 1.06rem
+                font-size: 1.05rem
             }
 
             .options {
@@ -563,404 +411,456 @@
 </head>
 
 <body>
-
-    <!-- Side buttons -->
-    <div class="side-buttons">
-        <button id="help-btn" class="circle-btn" aria-label="Instructions">?</button>
-        <button id="links-btn" class="circle-btn" aria-label="Links">🔗</button>
-    </div>
-
-    <!-- Centered content -->
-    <div class="center-wrap">
-        <!-- Intro -->
-        <section id="intro-screen" class="screen">
-            <div class="brand brand--intro">
-                <img src="nextelect-logo.png" alt="NextElect Logo">
-                <h1 class="logo">NextElect Bias Buster</h1>
-            </div>
-            <button id="play-btn" class="btn">Play</button>
-        </section>
-
-        <!-- Game -->
-        <section id="game-screen" class="screen hidden" aria-live="polite">
-            <div class="brand brand--game">
-                <img src="nextelect-logo.png" alt="NextElect Logo">
-                <h1 class="logo">NextElect Bias Buster</h1>
+    <div class="center">
+        <main class="screen" aria-live="polite">
+            <div class="brand">
+                <img src="nextelect-logo.png" alt="NextElect Logo" />
+                <h1 class="logo">Issue of the Week</h1>
             </div>
 
-            <div class="progress-top">
-                <div class="topic-label" id="topic-label">Topic 1 of 3</div>
-                <div class="progress-container">
-                    <div id="progress-bar"></div>
+            <!-- Start -->
+            <section id="start" class="card">
+                <h2>Welcome</h2>
+                <p class="muted">Read a neutral summary, play one Bias Buster round, then sort a timeline.</p>
+                <div class="btn-row"><button id="go-summary" class="btn">Start</button></div>
+            </section>
+
+            <!-- Summary (read-only to players; you edit it in code) -->
+            <section id="summary" class="card section hidden">
+                <h2>Step 1 · Neutral Summary</h2>
+                <div id="issue-title" class="summary-title"></div>
+                <div id="issue-summary" class="summary-text"></div>
+                <div class="btn-row"><button id="to-bias" class="btn">Continue</button></div>
+            </section>
+
+            <!-- Bias Buster (single round, 3 items you set in code) -->
+            <section id="bias" class="section hidden">
+                <div class="card">
+                    <div class="progress-top">
+                        <div id="topic-label" class="topic-label">Bias Buster · 1 round (3 headlines)</div>
+                        <div class="progress-bar-wrap">
+                            <div id="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div class="meta-row">
+                        <div id="streak">Streak: 0</div>
+                        <div id="correctness">0 / 0</div>
+                        <div id="progress">0 / 3</div>
+                    </div>
+
+                    <div id="boxes"></div>
+                    <div id="headline"></div>
+                    <div class="options">
+                        <button class="option-btn" data-choice="left">Left</button>
+                        <button class="option-btn" data-choice="center">Center</button>
+                        <button class="option-btn" data-choice="right">Right</button>
+                        <button class="option-btn" data-choice="satire">Satire</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="meta-row">
-                <div class="streak" id="streak">Streak: 0</div>
-                <div class="correctness" id="correctness">0 / 0</div>
-                <div class="progress-text" id="progress-text">0 / 9</div>
-            </div>
+                <details class="card section">
+                    <summary style="cursor:pointer">Sources & notes</summary>
+                    <div id="articles" class="articles" style="margin-top:.6rem"></div>
+                </details>
 
-            <!-- Animated panel for per-topic content -->
-            <div id="game-panel">
-                <div id="boxes" aria-label="Answer history (this topic only)"></div>
-                <div id="headline"></div>
-                <div class="options">
-                    <button class="option-btn" data-choice="left">Left</button>
-                    <button class="option-btn" data-choice="center">Center</button>
-                    <button class="option-btn" data-choice="right">Right</button>
-                    <button class="option-btn" data-choice="satire">Satire</button>
+                <div class="btn-row">
+                    <button id="to-timeline" class="btn small hidden">Go to Timeline</button>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Result -->
-        <section id="result-screen" class="screen hidden">
-            <div class="brand brand--result">
-                <img src="nextelect-logo.png" alt="NextElect Logo">
-                <h1 class="logo">NextElect Bias Buster</h1>
-            </div>
-            <h1>Your Score</h1>
-            <p id="final-score"></p>
-            <p id="final-note"></p>
-            <div class="btn-row">
-                <button id="articles-btn" class="btn small">Articles</button>
-            </div>
-        </section>
+            <!-- Timeline (hard-gated until Bias Buster is complete) -->
+            <section id="timeline" class="card section hidden">
+                <div class="tl-head">
+                    <h2>Step 3 · Put Events in Order (earliest → latest)</h2>
+                    <div class="lives" id="lives">❤️❤️❤️</div>
+                </div>
+
+                <div class="event-scroll">
+                    <ul id="event-list" class="event-list"></ul>
+                </div>
+
+                <div class="tl-actions">
+                    <button id="confirm-order" class="btn small">Check Order</button>
+                    <button id="reset-order" class="btn small">Reset</button>
+                    <button id="reshuffle" class="btn small">Reshuffle</button>
+                    <button id="reveal" class="btn small">Reveal</button>
+                    <button id="play-again" class="btn small hidden">Play Again</button>
+                </div>
+                <p id="tl-score" class="score"></p>
+
+                <div class="btn-row" style="margin-top:10px">
+                    <button id="finish" class="btn">Finish</button>
+                </div>
+            </section>
+
+            <!-- Final -->
+            <section id="final" class="card section hidden" style="text-align:center">
+                <h2>All Set</h2>
+                <p class="muted" id="final-note">You can restart for a new issue.</p>
+                <div class="btn-row"><button id="restart" class="btn">Restart</button></div>
+            </section>
+        </main>
     </div>
-
-    <!-- Instructions Modal -->
-    <div id="instructions-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="howto-title">
-        <div class="modal-content">
-            <button id="instructions-close" class="close-btn" aria-label="Close">×</button>
-            <h2 id="howto-title">How to Play</h2>
-            <p class="nolines"><strong>3 topics</strong>, one at a time. Each topic has <strong>3 headlines</strong>
-                (total = 9).</p>
-            <p class="nolines">For each headline, pick <em>Left</em>, <em>Center</em>, <em>Right</em>, or
-                <em>Satire</em>. One click locks your answer.
-            </p>
-            <p class="nolines">The three tiles above log your results for this topic. Progress shows <em>answered /
-                    9</em>.</p>
-            <div id="start-row" style="margin-top:.8rem;display:flex;gap:.6rem;justify-content:flex-end;">
-                <button id="start-btn" class="btn">Start Game</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Links Modal -->
-    <div id="links-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="links-title">
-        <div class="modal-content">
-            <button id="links-close" class="close-btn" aria-label="Close">×</button>
-            <h2 id="links-title">Bias & Media Literacy Resources</h2>
-            <p><a href="https://redbluedictionary.org" target="_blank" rel="noopener">redbluedictionary.org</a> — how
-                different groups define the same political terms.</p>
-            <p><a href="https://www.allsides.com" target="_blank" rel="noopener">allsides.com</a> — outlet bias ratings
-                and side-by-side coverage.</p>
-            <p><a href="https://ground.news" target="_blank" rel="noopener">ground.news</a> — compare headlines and
-                framing across outlets.</p>
-            <p><a href="https://mediabiasfactcheck.com" target="_blank" rel="noopener">mediabiasfactcheck.com</a> —
-                background pages with bias and factual-reporting scores.</p>
-        </div>
-    </div>
-
-    <!-- Articles Modal (shows explanations) -->
-    <div id="articles-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="articles-title">
-        <div class="modal-content">
-            <button id="articles-close" class="close-btn" aria-label="Close">×</button>
-            <h2 id="articles-title">Articles</h2>
-            <div id="articles-list" class="articles-list"><!-- filled by JS --></div>
-        </div>
-    </div>
-
-    <!-- Disclaimer -->
-    <p class="disclaimer">
-        These headlines are not written by NextElect. NextElect interpretations of these headlines may not always be
-        correct.
-    </p>
 
     <script>
-        // ====== TOPICS (3 × 3) WITH EXPLANATIONS ======
-        const topics = [
-            {
-                title: "Supreme Court & Agency Power",
-                items: [
-                    {
-                        text: "The Senate meets to vote on an important bill",
-                        answer: "center",
-                        author: "US Politics Daily",
-                        url: "https://www.washingtonpost.com/politics/2025/09/22/trump-supreme-court-ftc-firing-slaughter/",
-                        explanation: "Neutral construction that foregrounds the action ('allows') without loaded adjectives or motives. Reads like a straight news update focused on the ruling and consequence."
-                    },
-                    {
-                        text: "Supreme Court will weigh expanding Trump's power to shape agencies by overturning 90-year-old ruling.",
-                        answer: "left",
-                        author: "AP News",
-                        url: "https://apnews.com/article/2149d7c3802b3ddea6e157d3a0afd292",
-                        explanation: "Framing centers on 'expanding Trump's power' and loss of precedent, which aligns with left-leaning worry about executive overreach and dismantling guardrails."
-                    },
-                    {
-                        text: "FTC firings take spotlight in Trump's fight to erase independence at agencies.",
-                        answer: "left",
-                        author: "Fox News",
-                        url: "https://www.foxnews.com/politics/ftc-firings-take-spotlight-trumps-fight-erase-independence-agencies",
-                        explanation: "Phrases like 'erase independence' imply damage to institutional norms; that critique of centralizing power typically maps left-of-center."
-                    }
-                ]
+        /* =========================
+           CONFIG — YOU EDIT THIS
+           ========================= */
+        const CONFIG = {
+            issue: {
+                title: "Sample: Agencies & Executive Power",
+                summary:
+                    `Officials and courts are weighing how much control the White House has over independent agencies.
+Key questions: what legal limits apply, and how would changes affect regulation and enforcement?
+Backers say clearer lines improve accountability; critics warn it weakens guardrails and independence.`
             },
-            {
-                title: "Charlie Kirk Memorial & Fallout",
-                items: [
-                    {
-                        text: "Democrats silent as Republicans galvanised after Charlie Kirk memorial.",
-                        answer: "right",
-                        author: "The Guardian",
-                        url: "https://www.theguardian.com/us-news/2025/sep/22/charlie-kirk-memorial-democrats-republicans",
-                        explanation: "Highlights Democratic 'silence' versus GOP momentum; the contrast can be read as favorable to Republicans and critical of Democrats."
-                    },
-                    {
-                        text: "Charlie Kirk vote splits Democrats, prompting hypocrisy outcry from House GOP: 'Americans won't forget'.",
-                        answer: "right",
-                        author: "Fox News",
-                        url: "https://www.foxnews.com/politics/charlie-kirk-vote-splits-democrats-prompting-hypocrisy-outcry-from-house-gop-americans-wont-forget",
-                        explanation: "Centers GOP messaging ('hypocrisy outcry', 'Americans won't forget') and internal Democratic division—typical right-leaning emphasis."
-                    },
-                    {
-                        text: "Trump has managed another Republican makeover since Kirk’s assassination, this time on free speech.",
-                        answer: "left",
-                        author: "AP (via Breitbart News)",
-                        url: "https://www.breitbart.com/news/trump-has-managed-another-republican-makeover-since-kirks-assassination-this-time-on-free-speech/",
-                        explanation: "Word choice like 'managed' and 'makeover' suggests engineered repositioning; focuses on narrative of manipulation—common in left-leaning critiques."
-                    }
-                ]
-            },
-            {
-                title: "White House Autism Announcement",
-                items: [
-                    {
-                        text: "Trump to reveal medical finding he calls 'answer to autism' in major announcement.",
-                        answer: "right",
-                        author: "Fox News",
-                        url: "https://www.foxnews.com/politics/trump-reveal-medical-finding-he-calls-answer-autism-major-announcement",
-                        explanation: "Adopts the White House framing ('answer to autism') and promotional tone around the announcement—more favorable to the administration."
-                    },
-                    {
-                        text: "Trump admin live updates: President to make 'historic' announcement about autism, White House official says.",
-                        answer: "center",
-                        author: "ABC News",
-                        url: "https://abcnews.go.com/Politics/live-updates/trump-admin-live-updates/?id=125807330",
-                        explanation: "Live-blog format with attributions ('official says'); relays claims with quotes and sourcing, typical of neutral wire/live coverage."
-                    },
-                    {
-                        text: "Trump officials reportedly set to tie Tylenol to autism risk.",
-                        answer: "left",
-                        author: "The Guardian",
-                        url: "https://www.theguardian.com/us-news/2025/sep/21/trump-officials-tylenol-autism",
-                        explanation: "Skeptical framing ('reportedly', 'tie…to risk') flags concern about evidence basis; that critical stance toward the administration leans left."
-                    }
-                ]
-            }
-        ];
+            biasRound: [
+                {
+                    text: "Court will take up dispute over agency independence next term",
+                    answer: "center",
+                    author: "Example Neutral Outlet",
+                    url: "https://example.com/neutral",
+                    explanation: "Neutral preview; avoids judgment language."
+                },
+                {
+                    text: "Critics warn plan hands the White House more power over watchdogs",
+                    answer: "left",
+                    author: "Example Left Outlet",
+                    url: "https://example.com/left",
+                    explanation: "Leads with critics; frames expansion of executive control."
+                },
+                {
+                    text: "Supporters say federal agencies need stronger presidential oversight",
+                    answer: "right",
+                    author: "Example Right Outlet",
+                    url: "https://example.com/right",
+                    explanation: "Positive framing of central oversight."
+                }
+            ],
+            // Set id values so the correct order is ascending by id.
+            timelineEvents: [
+                { id: 1, text: "Initial proposal to revise oversight rules is unveiled" },
+                { id: 2, text: "Key committee holds hearing with agency officials" },
+                { id: 3, text: "Court schedules oral argument on the oversight question" },
+                { id: 4, text: "Administration releases implementation guidance" },
+                { id: 5, text: "Agencies publish responses and next steps" }
+            ],
+            timelineLives: 3
+        };
 
-        const TOTAL_QUESTIONS = topics.reduce((n, t) => n + t.items.length, 0); // 9
+        /* =========================
+           Helpers
+           ========================= */
+        const $ = (sel) => document.querySelector(sel);
+        const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+        const esc = (s) => (s || "").replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+        const cap = (s) => s ? s[0].toUpperCase() + s.slice(1) : s;
 
-        // ----- State -----
-        let topicIndex = 0, itemIndex = 0, answered = 0, score = 0, streak = 0;
-
-        // ----- DOM -----
-        const introScreen = document.getElementById('intro-screen');
-        const gameScreen = document.getElementById('game-screen');
-        const resultScreen = document.getElementById('result-screen');
-
-        const helpBtn = document.getElementById('help-btn');
-        const linksBtn = document.getElementById('links-btn');
-
-        const topicLabel = document.getElementById('topic-label');
-        const boxes = document.getElementById('boxes');
-        const headlineEl = document.getElementById('headline');
-        const optionBtns = document.querySelectorAll('.option-btn');
-        const progressBar = document.getElementById('progress-bar');
-        const streakDiv = document.getElementById('streak');
-        const correctnessDiv = document.getElementById('correctness');
-        const progressText = document.getElementById('progress-text');
-        const gamePanel = document.getElementById('game-panel');
-
-        const instructionsModal = document.getElementById('instructions-modal');
-        const linksModal = document.getElementById('links-modal');
-        const instructionsClose = document.getElementById('instructions-close');
-        const linksClose = document.getElementById('links-close');
-        const startRow = document.getElementById('start-row');
-
-        const articlesBtn = document.getElementById('articles-btn');
-        const articlesModal = document.getElementById('articles-modal');
-        const articlesClose = document.getElementById('articles-close');
-        const articlesList = document.getElementById('articles-list');
-
-        // ----- Utilities -----
-        function showScreen(el) { [introScreen, gameScreen, resultScreen].forEach(s => s.classList.add('hidden')); el.classList.remove('hidden'); }
-        function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-        function esc(s) { return (s || "").replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
-
-        function updateMeta() {
-            topicLabel.textContent = `Topic ${topicIndex + 1} of ${topics.length}: ${topics[topicIndex].title}`;
-            progressBar.style.width = `${(answered / TOTAL_QUESTIONS) * 100}%`;
-            streakDiv.textContent = `Streak: ${streak}`;
-            correctnessDiv.textContent = answered > 0 ? `${score} / ${answered}` : `0 / 0`;
-            progressText.textContent = `${answered} / ${TOTAL_QUESTIONS}`;
+        function showOnly(id) {
+            ['start', 'summary', 'bias', 'timeline', 'final'].forEach(x => $('#' + x).classList.add('hidden'));
+            $('#' + id).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function buildTopicBoxes() {
+        /* =========================
+           Step 0 → Step 1: Summary
+           ========================= */
+        $('#go-summary').addEventListener('click', () => {
+            $('#issue-title').textContent = CONFIG.issue.title || "Issue";
+            $('#issue-summary').textContent = CONFIG.issue.summary || "";
+            showOnly('summary');
+        });
+
+        $('#to-bias').addEventListener('click', () => {
+            initBias();
+            showOnly('bias');
+        });
+
+        /* =========================
+           Step 2: Bias Buster (1 round)
+           ========================= */
+        const TOTAL = CONFIG.biasRound.length;
+        let bbIndex = 0, bbAnswered = 0, bbScore = 0, bbStreak = 0;
+
+        function initBias() {
+            bbIndex = 0; bbAnswered = 0; bbScore = 0; bbStreak = 0;
+            buildBoxes();
+            updateBBMeta();
+            showBBQuestion();
+            buildArticles();
+            // keep timeline button hidden until we finish
+            $('#to-timeline').classList.add('hidden');
+        }
+
+        function buildBoxes() {
+            const boxes = $('#boxes');
             boxes.innerHTML = '';
-            for (let i = 0; i < topics[topicIndex].items.length; i++) {
-                boxes.innerHTML += '<div class="box"></div>';
+            for (let i = 0; i < TOTAL; i++) {
+                const div = document.createElement('div');
+                div.className = 'box';
+                boxes.appendChild(div);
             }
         }
 
-        function showQuestion() {
-            const q = topics[topicIndex].items[itemIndex];
-            headlineEl.textContent = q.text;
-            optionBtns.forEach(b => { b.disabled = false; b.classList.remove('correct', 'incorrect'); });
-            updateMeta();
+        function updateBBMeta() {
+            $('#topic-label').textContent = `Bias Buster · 1 round (${TOTAL} headlines)`;
+            $('#progress-bar').style.width = `${(bbAnswered / TOTAL) * 100}%`;
+            $('#streak').textContent = `Streak: ${bbStreak}`;
+            $('#correctness').textContent = bbAnswered ? `${bbScore} / ${bbAnswered}` : '0 / 0';
+            $('#progress').textContent = `${bbAnswered} / ${TOTAL}`;
         }
 
-        function initGame() {
-            topicIndex = 0; itemIndex = 0; answered = 0; score = 0; streak = 0;
-            buildTopicBoxes(); updateMeta(); showQuestion(); showScreen(gameScreen);
+        function showBBQuestion() {
+            const q = CONFIG.biasRound[bbIndex];
+            $('#headline').textContent = q.text;
+            $$('.option-btn').forEach(b => b.disabled = false);
         }
 
-        function animateToNextTopic() {
-            gamePanel.classList.remove('slide-in-right');
-            gamePanel.classList.add('slide-out-left');
-            gamePanel.addEventListener('animationend', function handler() {
-                gamePanel.removeEventListener('animationend', handler);
-                gamePanel.classList.remove('slide-out-left');
-                buildTopicBoxes(); itemIndex = 0; updateMeta(); showQuestion();
-                requestAnimationFrame(() => { gamePanel.classList.add('slide-in-right'); });
-                gamePanel.addEventListener('animationend', function handlerIn() {
-                    gamePanel.removeEventListener('animationend', handlerIn);
-                    gamePanel.classList.remove('slide-in-right');
-                });
-            });
-        }
-
-        function handleAnswer(choice) {
-            const q = topics[topicIndex].items[itemIndex];
-            const box = document.getElementsByClassName('box')[itemIndex];
-            optionBtns.forEach(b => b.disabled = true);
+        function handleBias(choice) {
+            const q = CONFIG.biasRound[bbIndex];
+            const box = $$('#boxes .box')[bbIndex];
+            $$('.option-btn').forEach(b => b.disabled = true);
 
             if (choice === q.answer) {
-                score++; streak++;
+                bbScore++; bbStreak++;
                 box.classList.add('correct', 'flash');
-                box.textContent = `✅ Correct (${cap(q.answer)}) | Source: ${q.author}`;
-                setTimeout(() => box.classList.remove('flash'), 500);
+                box.textContent = `✅ Correct (${cap(q.answer)}) | Source: ${q.author || 'Source'}`;
+                setTimeout(() => box.classList.remove('flash'), 420);
             } else {
-                streak = 0;
+                bbStreak = 0;
                 box.classList.add('incorrect');
-                box.textContent = `❌ Correct bias: ${cap(q.answer)} | Source: ${q.author}`;
-                headlineEl.classList.add('shake');
-                headlineEl.addEventListener('animationend', () => headlineEl.classList.remove('shake'), { once: true });
+                box.textContent = `❌ Correct bias: ${cap(q.answer)} | Source: ${q.author || 'Source'}`;
+                $('#headline').classList.add('shake');
+                $('#headline').addEventListener('animationend', () => $('#headline').classList.remove('shake'), { once: true });
             }
 
-            answered++; updateMeta();
+            bbAnswered++; updateBBMeta();
 
             setTimeout(() => {
-                itemIndex++;
-                if (itemIndex < topics[topicIndex].items.length) {
-                    showQuestion();
+                bbIndex++;
+                if (bbIndex < TOTAL) {
+                    showBBQuestion();
                 } else {
-                    topicIndex++;
-                    if (topicIndex < topics.length) { animateToNextTopic(); }
-                    else { finishGame(); }
+                    // unlock timeline
+                    $('#to-timeline').classList.remove('hidden');
                 }
-            }, 600);
+            }, 520);
         }
 
-        function finishGame() {
-            document.getElementById('final-score').textContent = `You got ${score} / ${TOTAL_QUESTIONS} correct.`;
-            document.getElementById('final-note').textContent = endNote(score, TOTAL_QUESTIONS);
-            showScreen(resultScreen);
-        }
+        $$('.option-btn').forEach(btn => btn.addEventListener('click', () => handleBias(btn.dataset.choice)));
 
-        function endNote(sc, total) {
-            if (sc === total) return "Perfect! You read like a pro.";
-            if (sc >= total - 1) return "So close. One off perfection.";
-            if (sc >= Math.ceil(total * 0.6)) return "Nice work. Keep sharpening your eye.";
-            if (sc >= 1) return "Not bad. Try again and beat this score.";
-            return "Tough round. Play again to warm up.";
-        }
-
-        // ------- Articles (shows hard-coded explanations) -------
         function buildArticles() {
-            articlesList.innerHTML = '';
-            let idx = 1;
+            const root = $('#articles');
+            root.innerHTML = '';
+            CONFIG.biasRound.forEach((h, i) => {
+                const card = document.createElement('div');
+                card.className = 'article';
+                card.innerHTML = `
+          <div class="muted" style="margin-bottom:.2rem">${i + 1}. ${esc(h.author || '')}</div>
+          <div style="color:#e9eef7;margin-bottom:.3rem">${esc(h.text)}</div>
+          <div class="muted" style="font-size:.9rem">
+            <span style="background:#444a57;color:#eaeef6;padding:.06rem .5rem;border-radius:999px;font-size:.8em">${esc(cap(h.answer))}</span>
+            &nbsp;•&nbsp;<a href="${esc(h.url || '#')}" target="_blank" rel="noopener">Open</a>
+          </div>
+          ${h.explanation ? `<div style="margin-top:.45rem;color:#e9eef7">${esc(h.explanation)}</div>` : ``}
+        `;
+                root.appendChild(card);
+            });
+        }
 
-            topics.forEach((topic) => {
-                topic.items.forEach((h) => {
-                    const card = document.createElement('div');
-                    card.className = 'article-card';
-                    card.innerHTML = `
-                        <div class="article-topic">${idx}. ${esc(topic.title)}</div>
-                        <div class="article-headline">${esc(h.text)}</div>
-                        <div class="article-meta">
-                            <span class="badge">${esc(cap(h.answer))}</span>
-                            <span>• ${esc(h.author || '')}</span>
-                            <span class="article-link">• <a href="${esc(h.url)}" target="_blank" rel="noopener">Open</a></span>
-                        </div>
-                        ${h.explanation ? `
-                          <div class="expl-block">
-                            <div class="expl-title">Explanation</div>
-                            <div class="expl-text">${esc(h.explanation)}</div>
-                          </div>` : ``}
-                    `;
-                    articlesList.appendChild(card);
-                    idx++;
+        // Hard gate navigation
+        $('#to-timeline').addEventListener('click', () => {
+            if (bbAnswered < TOTAL) {
+                $('#headline').classList.add('shake');
+                $('#headline').addEventListener('animationend', () => $('#headline').classList.remove('shake'), { once: true });
+                return;
+            }
+            initTimeline();
+            showOnly('timeline');
+        });
+
+        /* =========================
+           Step 3: Timeline (DnD with lives + replay)
+           ========================= */
+        let lives = CONFIG.timelineLives;
+        let startLayout = []; // for reset
+        function updateLives() { $('#lives').textContent = '❤️'.repeat(Math.max(0, lives)) }
+
+        function initTimeline() {
+            lives = CONFIG.timelineLives;
+            updateLives();
+            buildTimeline(shuffle([...CONFIG.timelineEvents]));
+            $('#tl-score').textContent = '';
+            $('#play-again').classList.add('hidden');
+        }
+
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function buildTimeline(items) {
+            const list = $('#event-list');
+            list.innerHTML = '';
+            items.forEach(ev => {
+                const li = document.createElement('li');
+                li.className = 'event';
+                li.draggable = true;
+                li.dataset.id = ev.id;
+                li.innerHTML = `
+          <div style="display:flex;gap:.55rem;align-items:flex-start">
+            <div style="opacity:.7">☰</div>
+            <div class="event-text">${esc(ev.text)}</div>
+          </div>
+        `;
+                list.appendChild(li);
+            });
+            startLayout = currentIds(); // snapshot for Reset
+            wireDnD();
+        }
+
+        function currentIds() {
+            return $$('#event-list .event').map(n => parseInt(n.dataset.id, 10));
+        }
+
+        function correctIds() {
+            return [...CONFIG.timelineEvents].sort((a, b) => a.id - b.id).map(e => e.id);
+        }
+
+        function scoreTimeline({ reveal = false } = {}) {
+            const order = currentIds();
+            const correct = correctIds();
+            let hits = 0;
+            $$('#event-list .event').forEach((n, i) => {
+                const ok = order[i] === correct[i];
+                if (ok) hits++;
+                n.classList.toggle('correct', ok);
+                n.classList.toggle('incorrect', !ok && !reveal);
+            });
+
+            const total = correct.length;
+            if (reveal) {
+                $('#tl-score').textContent = `Correct order shown. (${hits}/${total} in your last attempt)`;
+            } else {
+                const pct = Math.round((hits / total) * 100);
+                $('#tl-score').textContent = `You placed ${hits} of ${total} correctly (${pct}%). Lives left: ${lives}`;
+            }
+            return hits === total;
+        }
+
+        function wireDnD() {
+            const list = $('#event-list');
+            let dragging = null;
+
+            $$('#event-list .event').forEach(el => {
+                el.addEventListener('dragstart', e => {
+                    dragging = el;
+                    el.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', el.dataset.id); // Firefox
+                    // clear previous marks
+                    $$('#event-list .event').forEach(n => n.classList.remove('correct', 'incorrect'));
+                });
+                el.addEventListener('dragend', () => {
+                    if (dragging) { dragging.classList.remove('dragging'); dragging = null; }
                 });
             });
-        }
 
-        // --- Events ---
-        document.getElementById('play-btn').addEventListener('click', () => {
-            startRow.classList.remove('hidden');
-            instructionsModal.classList.remove('hidden');
-        });
+            list.addEventListener('dragover', e => {
+                e.preventDefault();
+                if (!dragging) return;
 
-        helpBtn.addEventListener('click', () => {
-            startRow.classList.add('hidden');
-            instructionsModal.classList.remove('hidden');
-        });
-
-        linksBtn.addEventListener('click', () => linksModal.classList.remove('hidden'));
-
-        const startBtn = document.getElementById('start-btn');
-        if (startBtn) {
-            startBtn.addEventListener('click', () => {
-                instructionsModal.classList.add('hidden');
-                initGame();
+                const after = closestInsertionPoint(list, e.clientX, e.clientY, dragging);
+                if (after == null) list.appendChild(dragging);
+                else list.insertBefore(dragging, after);
             });
+
+            list.addEventListener('drop', e => e.preventDefault());
         }
 
-        // Close modals on backdrop
-        instructionsModal.addEventListener('click', e => { if (e.target.id === 'instructions-modal') instructionsModal.classList.add('hidden'); });
-        linksModal.addEventListener('click', e => { if (e.target.id === 'links-modal') linksModal.classList.add('hidden'); });
-        articlesModal.addEventListener('click', e => { if (e.target.id === 'articles-modal') articlesModal.classList.add('hidden'); });
+        function closestInsertionPoint(container, x, y, ignore) {
+            const els = [...container.querySelectorAll('.event')].filter(n => n !== ignore);
+            if (els.length === 0) return null;
 
-        // Close via X
-        instructionsClose.addEventListener('click', () => instructionsModal.classList.add('hidden'));
-        linksClose.addEventListener('click', () => linksModal.classList.add('hidden'));
-        articlesClose.addEventListener('click', () => articlesModal.classList.add('hidden'));
+            // Nearest card center by distance
+            let best = { el: null, d2: Infinity };
+            for (const el of els) {
+                const r = el.getBoundingClientRect();
+                const cx = r.left + r.width / 2;
+                const cy = r.top + r.height / 2;
+                const dx = x - cx, dy = y - cy;
+                const d2 = dx * dx + dy * dy;
+                if (d2 < best.d2) best = { el, d2 };
+            }
+            if (!best.el) return null;
 
-        // End-only Articles
-        const articlesBtnEl = document.getElementById('articles-btn');
-        if (articlesBtnEl) {
-            articlesBtnEl.addEventListener('click', () => {
-                buildArticles();
-                articlesModal.classList.remove('hidden');
-            });
+            // Insert before or after based on pointer vs center X
+            const r = best.el.getBoundingClientRect();
+            const after = x > (r.left + r.width / 2);
+            return after ? best.el.nextSibling : best.el;
         }
 
-        // Answer clicks
-        document.querySelectorAll('.option-btn').forEach(btn => {
-            btn.addEventListener('click', () => handleAnswer(btn.dataset.choice));
+        // Timeline controls + replay with lives
+        $('#confirm-order').addEventListener('click', () => {
+            const win = scoreTimeline({ reveal: false });
+            if (win) {
+                $('#tl-score').textContent += ' · Perfect! 🎯';
+                $('#play-again').classList.remove('hidden');
+                return;
+            }
+            lives--;
+            updateLives();
+            if (lives <= 0) {
+                $('#tl-score').textContent += ' · Out of lives. Here is the correct order.';
+                revealOrder();
+                $('#play-again').classList.remove('hidden');
+            }
         });
+
+        function revealOrder() {
+            const ordered = [...CONFIG.timelineEvents].sort((a, b) => a.id - b.id);
+            buildTimeline(ordered);
+            scoreTimeline({ reveal: true });
+        }
+
+        $('#reveal').addEventListener('click', revealOrder);
+
+        $('#reshuffle').addEventListener('click', () => {
+            buildTimeline(shuffle([...CONFIG.timelineEvents]));
+            $('#tl-score').textContent = '';
+            // lives unchanged; this is just another try
+        });
+
+        $('#reset-order').addEventListener('click', () => {
+            const byId = Object.fromEntries(CONFIG.timelineEvents.map(e => [e.id, e]));
+            const items = startLayout.map(id => byId[id]);
+            buildTimeline(items);
+            $('#tl-score').textContent = '';
+        });
+
+        $('#play-again').addEventListener('click', () => {
+            // Full timeline replay: reset lives and reshuffle
+            lives = CONFIG.timelineLives;
+            updateLives();
+            buildTimeline(shuffle([...CONFIG.timelineEvents]));
+            $('#tl-score').textContent = '';
+            $('#play-again').classList.add('hidden');
+        });
+
+        // Finish
+        $('#finish').addEventListener('click', () => {
+            const lines = [
+                `Issue: ${CONFIG.issue.title}`,
+                `Bias Buster: ${bbScore} / ${TOTAL}`,
+                `Timeline lives left: ${lives}`
+            ];
+            $('#final-note').textContent = lines.join(' · ');
+            showOnly('final');
+        });
+        $('#restart').addEventListener('click', () => location.reload());
     </script>
 </body>
 
