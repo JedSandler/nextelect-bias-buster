@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NextElect — Issue of the Week (Draft 4)</title>
+  <title>NextElect — Issue of the Week (Draft 4 — link tweak)</title>
   <style>
     /* ===== Theme ===== */
     *{margin:0;padding:0;box-sizing:border-box}
@@ -14,8 +14,9 @@
       --green-bg:#d4edda; --green-fg:#155724;
       --red-bg:#f8d7da; --red-fg:#721c24;
       --accent:#e6e6e6; --card:#2b2f36; --card-border:#3a3e47;
-      /* Lighter, brighter link blue per request */
-      --link:#cfe2ff;
+      /* Link colors */
+      --link-modal:#cfe2ff; /* lighter (Sources & Links modal / final) */
+      --link-bias:#aecdff;  /* slightly darker (Bias Buster only) */
     }
     body{
       font-family: Verdana, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -60,7 +61,11 @@
       float:right; background:transparent; border:1px solid #4a4f58; color:#cfd6df; border-radius:6px; padding:.25rem .45rem; cursor:pointer;
     }
     .modal-card .close-x:hover{background:#3b3e46}
-    .links-list a,.src-row a,.box .src a{color:var(--link); text-decoration:underline}
+
+    /* Link colors by area */
+    .links-list a,
+    .src-row a{color:var(--link-modal); text-decoration:underline} /* modal/final */
+    .box .src a{color:var(--link-bias); text-decoration:underline}  /* bias buster answers */
 
     .src-row{margin:.35rem 0}
     .src-row small{color:#cfd6df}
@@ -387,7 +392,6 @@
 
     function hearts(n){ return '❤️'.repeat(Math.max(0,n)); }
     function updateLives(){
-      // Keep text and hearts in sync
       $('#lives').innerHTML = `Lives: ${lives} ${hearts(lives)}`;
     }
 
@@ -516,10 +520,8 @@
       const ordered = [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id);
       buildTimeline(ordered);
       scoreTimeline({reveal:true});
-      // Show the "Go to Results" button after reveal (unless we're already going to results via loss)
       if(!fromLoss){
         $('#to-final-after-reveal').classList.remove('hidden');
-        // Also clarify what's happening
         $('#tl-score').textContent = "Here's the correct order. Ready to see your results?";
       }
     }
@@ -550,7 +552,7 @@
       const biasPart = `${bbScore}/3`;
       const livesPart = `${livesLeft}/3`;
 
-      // More exciting, performance-aware copy
+      // Exciting, performance-aware copy
       let msg;
       if(finalScore === 6){
         msg = `🔥 Outstanding! Score ${finalScore}/6 — Perfect balance of bias spotting (${biasPart}) and timeline recall (${livesPart}).`;
