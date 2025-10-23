@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NextElect — Issue of the Week</title>
+  <title>NextElect — Issue of the Week (Draft 4)</title>
   <style>
     /* ===== Theme ===== */
     *{margin:0;padding:0;box-sizing:border-box}
@@ -14,7 +14,8 @@
       --green-bg:#d4edda; --green-fg:#155724;
       --red-bg:#f8d7da; --red-fg:#721c24;
       --accent:#e6e6e6; --card:#2b2f36; --card-border:#3a3e47;
-      --link:#9ecbff;
+      /* Lighter, brighter link blue per request */
+      --link:#cfe2ff;
     }
     body{
       font-family: Verdana, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -59,7 +60,8 @@
       float:right; background:transparent; border:1px solid #4a4f58; color:#cfd6df; border-radius:6px; padding:.25rem .45rem; cursor:pointer;
     }
     .modal-card .close-x:hover{background:#3b3e46}
-    .links-list a{color:var(--link); text-decoration:underline}
+    .links-list a,.src-row a,.box .src a{color:var(--link); text-decoration:underline}
+
     .src-row{margin:.35rem 0}
     .src-row small{color:#cfd6df}
 
@@ -99,7 +101,6 @@
     .box.correct{border-color:#28a745;background:var(--green-bg);color:var(--green-fg)}
     .box.incorrect{border-color:#dc3545;background:var(--red-bg);color:var(--red-fg)}
     .box .src{font-size:.9rem;opacity:.85}
-    .box .src a{color:#0a58ca;text-decoration:underline}
 
     #headline{
       background:var(--tile);color:#111;padding:1.1rem 1rem;border-radius:14px;border:1px solid var(--tile-border);
@@ -135,13 +136,6 @@
     /* ===== Final ===== */
     .final-big{font-size:1.3rem;margin-bottom:.25rem;text-align:center}
     .final-sub{color:#e9eef7;margin:.25rem 0 .6rem;text-align:center}
-
-    /* small */
-    @media(max-width:560px){
-      .brand img{height:52px}.brand .logo{font-size:1.9rem}
-      #headline{font-size:1.05rem}.options{grid-template-columns:1fr}
-      #answer-history{grid-template-columns:1fr 1fr 1fr}
-    }
   </style>
 </head>
 <body>
@@ -234,6 +228,9 @@
     <div class="modal-card">
       <button id="sources-close" class="close-x" aria-label="Close">×</button>
       <h3>Sources & Links</h3>
+      <p class="muted" style="margin:.25rem 0 .5rem">
+        These are the articles used in Bias Buster. Your checkmarks reflect how you answered.
+      </p>
       <div id="final-sources" style="margin:.4rem 0 .6rem"></div>
       <hr style="border:0;border-top:1px solid #4a4f58;margin:.6rem 0">
       <div class="links-list">
@@ -256,10 +253,10 @@
         summaryBullets: [
           "The White House said on Tuesday it will submit plans for President Donald Trump's $250 million White House ballroom project to a body that oversees federal building construction, even though demolition work began earlier this week.",
           "Trump reveled on Tuesday in the demolition sounds by construction workers for the ballroom addition to the White House, the first major change to the historic property in decades.",
-          "The Treasury Department instructed employees not to share photos of the demolition of parts of the White House’s East Wing after images of construction equipment dismantling the facade of the building went viral online.",
+          "The Treasury Department instructed employees not to share photos of the demolition of parts of the White House’s East Wing after images of construction equipment dismantling the facade of the building went viral online."
         ]
       },
-      // Bias Buster (exactly 3) — include sources: we'll show them with each answer and on Final
+      // Bias Buster (exactly 3)
       biasRound: [
         {
           text: "Trump’s White House Ballroom Sparks Questions About Funding and Ethics",
@@ -280,7 +277,7 @@
           url: "https://www.wsj.com/politics/policy/treasury-tells-employees-not-to-share-photos-of-white-house-ballroom-construction-1d4f2c49"
         }
       ],
-      // Timeline: set id values so correct order is ascending by id (1..5)
+      // Timeline: correct order is ascending by id (1..5)
       timelineEvents: [
         { id: 1, text: "The White House Announces Ballroom Construction" },
         { id: 2, text: "Demolition and Construction begin on the ballroom" },
@@ -390,6 +387,7 @@
 
     function hearts(n){ return '❤️'.repeat(Math.max(0,n)); }
     function updateLives(){
+      // Keep text and hearts in sync
       $('#lives').innerHTML = `Lives: ${lives} ${hearts(lives)}`;
     }
 
@@ -497,15 +495,23 @@
       return after ? best.el.nextSibling : best.el;
     }
 
-    // Timeline controls — go straight to Final when win or out of lives.
+    // Timeline controls — go straight to Final when win; if out of lives, show message then go Final.
     $('#check-order').addEventListener('click', () => {
       const win = scoreTimeline({reveal:false});
       if(win){ goFinal(); return; }
       lives--; updateLives();
-      if(lives <= 0){ revealOrder(true); goFinal(); }
+      if(lives <= 0){
+        // Clear signal that they're going to results after failing
+        $('#tl-score').textContent = "Out of lives. Showing correct order, then taking you to results…";
+        revealOrder(true);
+        setTimeout(() => goFinal(), 900);
+      } else {
+        // Nudge: they were wrong but still have lives
+        $('#tl-score').textContent += " · Try again.";
+      }
     });
 
-    // Reveal now also shows a dedicated "Go to Results" button so users don't have to Check after revealing.
+    // Reveal shows a dedicated "Go to Results" button so users don't have to Check after revealing.
     function revealOrder(fromLoss=false){
       const ordered = [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id);
       buildTimeline(ordered);
@@ -513,6 +519,8 @@
       // Show the "Go to Results" button after reveal (unless we're already going to results via loss)
       if(!fromLoss){
         $('#to-final-after-reveal').classList.remove('hidden');
+        // Also clarify what's happening
+        $('#tl-score').textContent = "Here's the correct order. Ready to see your results?";
       }
     }
     $('#reveal').addEventListener('click', () => revealOrder(false));
@@ -536,19 +544,22 @@
        FINAL (score + sources)
        ========================= */
     function goFinal(){
-      // Final score = Bias Buster correct + Lives left
-      const finalScore = bbScore + Math.max(0, lives);
+      // Final score = Bias Buster correct + Lives left (current lives, not reset)
+      const livesLeft = Math.max(0, lives);
+      const finalScore = bbScore + livesLeft;
       const biasPart = `${bbScore}/3`;
-      const livesPart = `${Math.max(0,lives)}/3`;
+      const livesPart = `${livesLeft}/3`;
+
+      // More exciting, performance-aware copy
       let msg;
-      if(finalScore >= 6){
-        msg = `Score ${finalScore}/6 — Excellent. Bias: ${biasPart}. Lives: ${livesPart}.`;
-      }else if(finalScore >= 4){
-        msg = `Score ${finalScore}/6 — Solid. Bias: ${biasPart}. Lives: ${livesPart}.`;
-      }else if(finalScore >= 2){
-        msg = `Score ${finalScore}/6 — Keep at it. Bias: ${biasPart}. Lives: ${livesPart}.`;
-      }else{
-        msg = `Score ${finalScore}/6 — Tough round. Bias: ${biasPart}. Lives: ${livesPart}.`;
+      if(finalScore === 6){
+        msg = `🔥 Outstanding! Score ${finalScore}/6 — Perfect balance of bias spotting (${biasPart}) and timeline recall (${livesPart}).`;
+      } else if(finalScore >= 5){
+        msg = `💪 Strong work! Score ${finalScore}/6 — Bias: ${biasPart}. Lives: ${livesPart}. So close to perfect.`;
+      } else if(finalScore >= 3){
+        msg = `👍 Solid start. Score ${finalScore}/6 — Bias: ${biasPart}. Lives: ${livesPart}. A couple tweaks and you’ll nail it.`;
+      } else {
+        msg = `🔁 Keep going. Score ${finalScore}/6 — Bias: ${biasPart}. Lives: ${livesPart}. Recheck the summary and try again.`;
       }
       $('#final-line').textContent = msg;
 
