@@ -38,6 +38,31 @@
     .btn.small{padding:.6rem 1rem;font-size:.95rem}
     .btn-row{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.8rem}
 
+    /* Side floating button (shown on Final only) */
+    .side-fab{
+      position:fixed; right:18px; bottom:18px;
+      width:52px; height:52px; border-radius:50%;
+      background:#34363d; color:var(--fg); border:1px solid #474a53;
+      box-shadow:0 6px 16px rgba(0,0,0,.35); cursor:pointer; font-size:22px;
+      display:flex; align-items:center; justify-content:center; z-index:40;
+    }
+    .side-fab:hover{background:#3b3e46}
+
+    /* Modal */
+    .modal{position:fixed; inset:0; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; z-index:50}
+    .modal-card{
+      background:var(--card); color:var(--fg); border:1px solid var(--card-border); border-radius:14px;
+      width:min(96%, 720px); padding:1rem 1rem 1rem; box-shadow:0 12px 30px rgba(0,0,0,.35);
+    }
+    .modal-card h3{font-size:1.2rem; margin-bottom:.4rem}
+    .modal-card .close-x{
+      float:right; background:transparent; border:1px solid #4a4f58; color:#cfd6df; border-radius:6px; padding:.25rem .45rem; cursor:pointer;
+    }
+    .modal-card .close-x:hover{background:#3b3e46}
+    .links-list a{color:var(--link); text-decoration:underline}
+    .src-row{margin:.35rem 0}
+    .src-row small{color:#cfd6df}
+
     /* Cards / text */
     .card{
       background:var(--card);border:1px solid var(--card-border);border-radius:14px;
@@ -48,33 +73,33 @@
     .section{margin-top:12px}
     .center-text{text-align:center}
 
-    /* ===== Home (Part 0) ===== */
+    /* ===== Home ===== */
     .home-title{font-size:1.35rem;margin:8px 0 6px}
     ol.instructions{margin:.6rem auto 0;max-width:680px;text-align:left;color:#e9eef7;line-height:1.45;padding-left:1.1rem}
     ol.instructions li{margin:.3rem 0}
 
-    /* ===== Summary (Part 1) ===== */
-    .summary-title{font-size:1.2rem;color:#e9eef7;margin:.2rem 0 .5rem}
-    .summary-list{margin:.2rem 0 0 1.1rem;line-height:1.5}
+    /* ===== Part 1: Summary ===== */
+    .summary-title{font-size:1.2rem;color:#e9eef7;margin:.2rem 0 .5rem;text-align:center}
+    .summary-list{margin:.2rem auto 0;line-height:1.5;max-width:760px}
     .summary-list li{margin:.25rem 0}
 
-    /* ===== Bias Buster (Part 2) ===== */
+    /* ===== Part 2: Bias Buster ===== */
     .progress-top{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.5rem}
     .topic-label{font-size:1rem;color:var(--muted)}
     .progress-bar-wrap{flex:1;height:8px;background:#3a3d46;border-radius:5px;overflow:hidden}
     #progress-bar{height:100%;width:0%;background:var(--accent);transition:width .25s ease}
-
     .meta-row{display:flex;align-items:center;justify-content:flex-end;margin:.4rem 0 .7rem;color:var(--muted)}
     #progress{font-weight:600}
-
-    /* Answer history boxes (appear as user answers) */
     #answer-history{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:.8rem}
     .box{
-      min-height:56px;background:var(--tile);border:1px solid var(--tile-border);border-radius:12px;
-      display:flex;align-items:center;justify-content:center;box-shadow:0 2px 0 #cfcfcf;padding:.5rem;color:#202020;text-align:center;
+      min-height:64px;background:var(--tile);border:1px solid var(--tile-border);border-radius:12px;
+      display:flex;flex-direction:column;gap:.35rem;align-items:flex-start;justify-content:center;
+      box-shadow:0 2px 0 #cfcfcf;padding:.6rem .7rem;color:#202020;text-align:left;
     }
     .box.correct{border-color:#28a745;background:var(--green-bg);color:var(--green-fg)}
     .box.incorrect{border-color:#dc3545;background:var(--red-bg);color:var(--red-fg)}
+    .box .src{font-size:.9rem;opacity:.85}
+    .box .src a{color:#0a58ca;text-decoration:underline}
 
     #headline{
       background:var(--tile);color:#111;padding:1.1rem 1rem;border-radius:14px;border:1px solid var(--tile-border);
@@ -90,15 +115,12 @@
     @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
     .shake{animation:shake .22s}
 
-    /* ===== Timeline (Part 3) — vertical, all visible ===== */
+    /* ===== Part 3: Timeline (vertical, all visible) ===== */
     .tl-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
     .lives{color:#ffb3b3;font-weight:600}
-    .event-list{
-      display:flex;flex-direction:column;gap:.6rem;list-style:none;margin:.8rem 0 0;
-    }
+    .event-list{display:flex;flex-direction:column;gap:.6rem;list-style:none;margin:.8rem 0 0}
     .event{
-      background:#34363d;border:1px solid #4a4f58;border-radius:12px;
-      width:100%;min-height:86px;cursor:grab;user-select:none;
+      background:#34363d;border:1px solid #4a4f58;border-radius:12px;width:100%;min-height:86px;cursor:grab;user-select:none;
       display:flex;align-items:flex-start;justify-content:flex-start;padding:.85rem .9rem;text-align:left;
       color:#e9eef7;line-height:1.35;white-space:normal;word-break:break-word;
       transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
@@ -107,17 +129,13 @@
     .event.dragging{opacity:.8}
     .event.correct{border-color:#28a745;box-shadow:0 0 0 2px rgba(40,167,69,.25) inset}
     .event.incorrect{border-color:#dc3545;box-shadow:0 0 0 2px rgba(220,53,69,.25) inset}
-
     .tl-actions{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.8rem}
     .score{margin-top:.5rem;color:var(--muted);text-align:center}
 
     /* ===== Final ===== */
-    .final-big{font-size:1.3rem;margin-bottom:.25rem}
-    .final-sub{color:#e9eef7;margin:.25rem 0 .6rem}
-    .links-list{margin-top:.6rem}
-    .links-list a{color:var(--link);text-decoration:underline}
-    details{margin-top:.6rem}
-    summary{cursor:pointer}
+    .final-big{font-size:1.3rem;margin-bottom:.25rem;text-align:center}
+    .final-sub{color:#e9eef7;margin:.25rem 0 .6rem;text-align:center}
+
     /* small */
     @media(max-width:560px){
       .brand img{height:52px}.brand .logo{font-size:1.9rem}
@@ -136,20 +154,16 @@
         <h1 class="logo">NextElect — Issue of the Week</h1>
       </div>
 
-      <!-- ===== HOME (Current Status) ===== -->
+      <!-- ===== HOME ===== -->
       <section id="home" class="card center-text">
         <h2 class="home-title">Welcome to NextElect</h2>
         <p class="muted">Your weekly, unbiased practice on news reading.</p>
-
         <ol class="instructions">
           <li>Read a short, neutral overview of this week’s issue.</li>
           <li>Play Bias Buster: identify the framing (Left, Center, Right) for 3 headlines.</li>
           <li>Put 5 key events in correct order. You have 3 lives.</li>
         </ol>
-
-        <div class="btn-row">
-          <button id="start-btn" class="btn">Start</button>
-        </div>
+        <div class="btn-row"><button id="start-btn" class="btn">Start</button></div>
       </section>
 
       <!-- ===== PART 1: SUMMARY ===== -->
@@ -160,9 +174,7 @@
         </div>
         <div id="issue-title" class="summary-title"></div>
         <ul id="issue-summary" class="summary-list"></ul>
-        <div class="btn-row">
-          <button id="to-bias" class="btn">Start Playing</button>
-        </div>
+        <div class="btn-row"><button id="to-bias" class="btn">Start Playing</button></div>
       </section>
 
       <!-- ===== PART 2: BIAS BUSTER ===== -->
@@ -171,13 +183,12 @@
           <div id="topic-label" class="topic-label">Part 2 · Bias Buster</div>
           <div class="progress-bar-wrap"><div id="progress-bar"></div></div>
         </div>
+        <div class="meta-row"><div id="progress">0 / 3</div></div>
 
-        <div class="meta-row">
-          <div id="progress">0 / 3</div>
-        </div>
-
+        <!-- history boxes appear here after each answer, including source link -->
         <div id="answer-history"></div>
 
+        <!-- current headline -->
         <div id="headline"></div>
 
         <div class="options">
@@ -187,11 +198,11 @@
         </div>
       </section>
 
-      <!-- ===== PART 3: TIMELINE (vertical, no scroll needed) ===== -->
+      <!-- ===== PART 3: TIMELINE (vertical, all visible) ===== -->
       <section id="timeline" class="card section hidden">
         <div class="tl-head">
           <h2>Part 3 · Timeline (earliest → latest)</h2>
-          <div class="lives" id="lives"><span class="muted">Lives:</span> ❤️❤️❤️</div>
+          <div class="lives" id="lives"></div>
         </div>
 
         <ul id="event-list" class="event-list"></ul>
@@ -201,31 +212,37 @@
           <button id="reset-order" class="btn small">Reset</button>
           <button id="reshuffle" class="btn small">Reshuffle</button>
           <button id="reveal" class="btn small">Reveal</button>
+          <button id="to-final-after-reveal" class="btn small hidden">Go to Results</button>
         </div>
         <p id="tl-score" class="score"></p>
       </section>
 
       <!-- ===== FINAL ===== -->
-      <section id="final" class="card section hidden center-text">
+      <section id="final" class="card section hidden">
         <h2 class="final-big">Final Results</h2>
         <p id="final-line" class="final-sub"></p>
-
-        <details>
-          <summary>Sources & Links</summary>
-          <div class="links-list">
-            <p><a href="https://redbluedictionary.org" target="_blank" rel="noopener">Red/Blue Dictionary</a></p>
-            <p><a href="https://www.allsides.com" target="_blank" rel="noopener">AllSides</a></p>
-            <p><a href="https://ground.news" target="_blank" rel="noopener">Ground News</a></p>
-            <p><a href="https://mediabiasfactcheck.com" target="_blank" rel="noopener">Media Bias/Fact Check</a></p>
-          </div>
-        </details>
-
-        <div class="btn-row">
-          <button id="sources-btn" class="btn">Sources</button>
-        </div>
       </section>
 
     </main>
+  </div>
+
+  <!-- Floating Sources & Links button (only visible on Final) -->
+  <button id="fab-sources" class="side-fab hidden" aria-label="Sources & Links">🔗</button>
+
+  <!-- Sources & Links Modal -->
+  <div id="sources-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button id="sources-close" class="close-x" aria-label="Close">×</button>
+      <h3>Sources & Links</h3>
+      <div id="final-sources" style="margin:.4rem 0 .6rem"></div>
+      <hr style="border:0;border-top:1px solid #4a4f58;margin:.6rem 0">
+      <div class="links-list">
+        <p><a href="https://redbluedictionary.org" target="_blank" rel="noopener">Red/Blue Dictionary</a></p>
+        <p><a href="https://www.allsides.com" target="_blank" rel="noopener">AllSides</a></p>
+        <p><a href="https://ground.news" target="_blank" rel="noopener">Ground News</a></p>
+        <p><a href="https://mediabiasfactcheck.com" target="_blank" rel="noopener">Media Bias/Fact Check</a></p>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -236,18 +253,32 @@
       dateLabel: "10/16/2025",
       issue: {
         title: "Sample: Agencies & Executive Power",
-        // Write each bullet on its own line; we render as bullet points.
         summaryBullets: [
           "Officials and courts are weighing how much control the White House has over independent agencies.",
           "Key questions: which legal limits apply, and how changes might affect regulation and enforcement.",
           "Supporters say clearer lines improve accountability; critics warn it weakens guardrails and independence."
         ]
       },
-      // Bias Buster (exactly 3)
+      // Bias Buster (exactly 3) — include sources: we'll show them with each answer and on Final
       biasRound: [
-        { text: "Court will take up dispute over agency independence next term", answer: "center" },
-        { text: "Critics warn plan hands the White House more power over watchdogs", answer: "left" },
-        { text: "Supporters say federal agencies need stronger presidential oversight", answer: "right" }
+        {
+          text: "Court will take up dispute over agency independence next term",
+          answer: "center",
+          author: "Example Neutral Outlet",
+          url: "https://example.com/neutral"
+        },
+        {
+          text: "Critics warn plan hands the White House more power over watchdogs",
+          answer: "left",
+          author: "Example Left Outlet",
+          url: "https://example.com/left"
+        },
+        {
+          text: "Supporters say federal agencies need stronger presidential oversight",
+          answer: "right",
+          author: "Example Right Outlet",
+          url: "https://example.com/right"
+        }
       ],
       // Timeline: set id values so correct order is ascending by id (1..5)
       timelineEvents: [
@@ -275,22 +306,19 @@
     }
 
     /* =========================
-       HOME → SUMMARY (Part 1)
+       HOME → SUMMARY
        ========================= */
     $('#start-btn').addEventListener('click', () => {
-      // Fill summary
       $('#issue-title').textContent = `${CONFIG.dateLabel} · ${CONFIG.issue.title}`;
       const list = $('#issue-summary'); list.innerHTML = '';
       CONFIG.issue.summaryBullets.forEach(b => {
-        const li = document.createElement('li');
-        li.textContent = b;
-        list.appendChild(li);
+        const li = document.createElement('li'); li.textContent = b; list.appendChild(li);
       });
       showOnly('summary');
     });
 
     /* =========================
-       PART 1 → PART 2 (Bias)
+       SUMMARY → BIAS
        ========================= */
     $('#to-bias').addEventListener('click', () => {
       initBias();
@@ -316,10 +344,15 @@
       $$('.option-btn').forEach(b => b.disabled = false);
     }
 
-    function appendHistory(correct, correctLabel){
+    // Show source with each answer box, plus correct/incorrect status
+    function appendHistory(correct, item){
       const box = document.createElement('div');
       box.className = 'box ' + (correct ? 'correct' : 'incorrect');
-      box.textContent = correct ? `✅ ${cap(correctLabel)}` : `❌ ${cap(correctLabel)}`;
+      const status = correct ? '✅ Correct' : '❌ Correct bias';
+      box.innerHTML = `
+        <div><strong>${status}:</strong> ${cap(item.answer)}</div>
+        <div class="src">Source: ${esc(item.author||'')}${item.url ? ` • <a href="${esc(item.url)}" target="_blank" rel="noopener">Open</a>` : ''}</div>
+      `;
       $('#answer-history').appendChild(box);
     }
 
@@ -329,7 +362,7 @@
 
       const correct = (choice === q.answer);
       if(correct) bbScore++;
-      appendHistory(correct, q.answer);
+      appendHistory(correct, q);
 
       bbAnswered++;
       $('#progress').textContent = `${bbAnswered} / ${TOTAL}`;
@@ -340,23 +373,24 @@
         if(bbIndex < TOTAL){
           showBBQuestion();
         } else {
-          // No button; auto-advance to timeline
+          // Auto-advance to timeline after third answer
           initTimeline();
           showOnly('timeline');
         }
-      }, 480);
+      }, 450);
     }
 
     $$('.option-btn').forEach(btn => btn.addEventListener('click', () => handleBias(btn.dataset.choice)));
 
     /* =========================
-       PART 3: TIMELINE (vertical DnD)
+       TIMELINE (vertical DnD)
        ========================= */
     let lives = CONFIG.timelineLives;
     let startLayout = []; // for Reset
 
+    function hearts(n){ return '❤️'.repeat(Math.max(0,n)); }
     function updateLives(){
-      $('#lives').innerHTML = `<span class="muted">Lives:</span> ${'❤️'.repeat(Math.max(0,lives))}`;
+      $('#lives').innerHTML = `Lives: ${lives} ${hearts(lives)}`;
     }
 
     function initTimeline(){
@@ -364,6 +398,8 @@
       updateLives();
       buildTimeline(shuffle([...CONFIG.timelineEvents]));
       $('#tl-score').textContent = '';
+      // hide post-reveal final button until revealed
+      $('#to-final-after-reveal').classList.add('hidden');
     }
 
     function shuffle(arr){
@@ -394,13 +430,8 @@
       wireDnDVertical();
     }
 
-    function currentIds(){
-      return $$('#event-list .event').map(n => parseInt(n.dataset.id,10));
-    }
-
-    function correctIds(){
-      return [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id).map(e => e.id);
-    }
+    function currentIds(){ return $$('#event-list .event').map(n => parseInt(n.dataset.id,10)); }
+    function correctIds(){ return [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id).map(e => e.id); }
 
     function scoreTimeline({reveal=false} = {}){
       const order = currentIds();
@@ -412,14 +443,11 @@
         n.classList.toggle('correct', ok);
         n.classList.toggle('incorrect', !ok && !reveal);
       });
-
       const total = correct.length;
-      if(reveal){
-        $('#tl-score').textContent = `Correct order shown. (${hits}/${total} from your last attempt)`;
-      } else {
-        const pct = Math.round((hits/total)*100);
-        $('#tl-score').textContent = `You placed ${hits} of ${total} correctly (${pct}%). Lives left: ${lives}`;
-      }
+      const pct = Math.round((hits/total)*100);
+      $('#tl-score').textContent = reveal
+        ? `Correct order shown. (Last attempt: ${hits}/${total})`
+        : `You placed ${hits} of ${total} correctly (${pct}%). Lives left: ${lives}`;
       return hits === total;
     }
 
@@ -432,8 +460,8 @@
           dragging = el;
           el.classList.add('dragging');
           e.dataTransfer.effectAllowed = 'move';
-          e.dataTransfer.setData('text/plain', el.dataset.id); // Firefox requirement
-          // clear marks on new drag
+          e.dataTransfer.setData('text/plain', el.dataset.id);
+          // clear marks when a new drag starts
           $$('#event-list .event').forEach(n => n.classList.remove('correct','incorrect'));
         });
         el.addEventListener('dragend', () => {
@@ -444,7 +472,6 @@
       list.addEventListener('dragover', e => {
         e.preventDefault();
         if(!dragging) return;
-
         const after = closestVertical(list, e.clientY, dragging);
         if(after == null) list.appendChild(dragging);
         else list.insertBefore(dragging, after);
@@ -457,7 +484,6 @@
       const els = [...container.querySelectorAll('.event')].filter(n => n !== ignore);
       if(els.length === 0) return null;
 
-      // Closest center by vertical distance
       let best = {el:null, d:Infinity};
       for(const el of els){
         const r = el.getBoundingClientRect();
@@ -466,39 +492,36 @@
         if(d < best.d) best = {el, d};
       }
       if(!best.el) return null;
-
-      // Insert before or after based on pointer vs midline
       const r = best.el.getBoundingClientRect();
       const after = y > (r.top + r.height/2);
       return after ? best.el.nextSibling : best.el;
     }
 
-    // Timeline controls
+    // Timeline controls — go straight to Final when win or out of lives.
     $('#check-order').addEventListener('click', () => {
       const win = scoreTimeline({reveal:false});
-      if(win){
-        goFinal(); // auto when correct
-        return;
-      }
-      lives--;
-      updateLives();
-      if(lives <= 0){
-        revealOrder(); // optional visual
-        goFinal();     // auto when out of lives
-      }
+      if(win){ goFinal(); return; }
+      lives--; updateLives();
+      if(lives <= 0){ revealOrder(true); goFinal(); }
     });
 
-    function revealOrder(){
+    // Reveal now also shows a dedicated "Go to Results" button so users don't have to Check after revealing.
+    function revealOrder(fromLoss=false){
       const ordered = [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id);
       buildTimeline(ordered);
       scoreTimeline({reveal:true});
+      // Show the "Go to Results" button after reveal (unless we're already going to results via loss)
+      if(!fromLoss){
+        $('#to-final-after-reveal').classList.remove('hidden');
+      }
     }
-
-    $('#reveal').addEventListener('click', revealOrder);
+    $('#reveal').addEventListener('click', () => revealOrder(false));
+    $('#to-final-after-reveal').addEventListener('click', () => goFinal());
 
     $('#reshuffle').addEventListener('click', () => {
       buildTimeline(shuffle([...CONFIG.timelineEvents]));
       $('#tl-score').textContent = '';
+      $('#to-final-after-reveal').classList.add('hidden');
     });
 
     $('#reset-order').addEventListener('click', () => {
@@ -506,32 +529,58 @@
       const items = startLayout.map(id => byId[id]);
       buildTimeline(items);
       $('#tl-score').textContent = '';
+      $('#to-final-after-reveal').classList.add('hidden');
     });
 
     /* =========================
-       FINAL (score logic)
+       FINAL (score + sources)
        ========================= */
     function goFinal(){
-      const finalScore = bbScore + Math.max(0, lives); // correct bias buster + lives left
+      // Final score = Bias Buster correct + Lives left
+      const finalScore = bbScore + Math.max(0, lives);
+      const biasPart = `${bbScore}/3`;
+      const livesPart = `${Math.max(0,lives)}/3`;
       let msg;
       if(finalScore >= 6){
-        msg = `Score ${finalScore}/6 — Excellent. You balanced bias recognition with strong timeline recall.`;
+        msg = `Score ${finalScore}/6 — Excellent. Bias: ${biasPart}. Lives: ${livesPart}.`;
       }else if(finalScore >= 4){
-        msg = `Score ${finalScore}/6 — Solid. You’ve got the basics; try again to lock in the order faster.`;
+        msg = `Score ${finalScore}/6 — Solid. Bias: ${biasPart}. Lives: ${livesPart}.`;
       }else if(finalScore >= 2){
-        msg = `Score ${finalScore}/6 — Not bad. Re-read the summary and look closely at framing cues.`;
+        msg = `Score ${finalScore}/6 — Keep at it. Bias: ${biasPart}. Lives: ${livesPart}.`;
       }else{
-        msg = `Score ${finalScore}/6 — Tough round. Review the summary and try again with fresh eyes.`;
+        msg = `Score ${finalScore}/6 — Tough round. Bias: ${biasPart}. Lives: ${livesPart}.`;
       }
       $('#final-line').textContent = msg;
+
+      // Build per-question sources list reflecting correctness
+      const fs = $('#final-sources');
+      fs.innerHTML = '';
+      CONFIG.biasRound.forEach((item, i) => {
+        const hist = $$('#answer-history .box')[i];
+        const gotIt = hist ? hist.classList.contains('correct') : false;
+        const row = document.createElement('div');
+        row.className = 'src-row';
+        row.innerHTML = `${gotIt ? '✅' : '❌'} ${esc(item.text)}<br>
+          <small>Bias: ${cap(item.answer)} · Source: ${esc(item.author||'')}${
+            item.url ? ` · <a href="${esc(item.url)}" target="_blank" rel="noopener">Open</a>` : ''
+          }</small>`;
+        fs.appendChild(row);
+      });
+
       showOnly('final');
+      // Show floating Sources button at the end
+      $('#fab-sources').classList.remove('hidden');
     }
 
-    // "Sources" button simply expands the details
-    $('#sources-btn').addEventListener('click', () => {
-      const det = document.querySelector('section#final details');
-      if(det && !det.open) det.open = true;
-      det?.scrollIntoView({behavior:'smooth', block:'center'});
+    // Floating Sources button + modal
+    const fab = $('#fab-sources');
+    const modal = $('#sources-modal');
+    const closeBtn = $('#sources-close');
+
+    fab.addEventListener('click', () => modal.classList.remove('hidden'));
+    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) modal.classList.add('hidden');
     });
   </script>
 </body>
