@@ -3,91 +3,177 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NextElect — Issue of the Week (Draft 6)</title>
+  <title>NextElect — Issue of the Week (Draft 7)</title>
   <style>
-    /* ===== Theme ===== */
+    /* ===== Theme / Base ===== */
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%}
     :root{
-      --bg:#3c3f46; --fg:#f2f2f2; --muted:#d5d5d5;
-      --tile:#f7f7f7; --tile-border:#dcdcdc;
-      --green-bg:#d4edda; --green-fg:#155724;
-      --red-bg:#f8d7da; --red-fg:#721c24;
-      --accent:#e6e6e6; --card:#2b2f36; --card-border:#3a3e47;
-      /* Link colors */
+      --bg:#3c3f46;
+      --fg:#f2f2f2;
+      --muted:#d5d5d5;
+      --tile:#f7f7f7;
+      --tile-border:#dcdcdc;
+      --green-bg:#d4edda;
+      --green-fg:#155724;
+      --red-bg:#f8d7da;
+      --red-fg:#721c24;
+      --accent:#e6e6e6;
+      --card:#2b2f36;
+      --card-border:#3a3e47;
       --link-modal:#cfe2ff; /* lighter (Sources & Links modal / final) */
       --link-bias:#aecdff;  /* slightly darker (Bias Buster only) */
     }
     body{
       font-family: Verdana, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg); color:var(--fg);
-      min-height:100vh; display:flex; flex-direction:column;
+      background:var(--bg);
+      color:var(--fg);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
     }
     .hidden{display:none!important}
-    .center{flex:1;display:flex;align-items:center;justify-content:center;padding:12px 12px 24px}
-    .screen{width:100%;max-width:920px;margin:0 auto}
-    .brand{display:flex;align-items:center;justify-content:center;gap:.8rem;margin:0 0 12px}
+    .center{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 12px 24px;
+    }
+    .screen{
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+    }
+
+    /* Branding row */
+    .brand{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:.8rem;
+      margin:0 0 12px;
+    }
     .brand img{height:64px}
     .brand .logo{font-size:2.2rem}
 
-    /* Buttons */
-    button{font-family:inherit}
-    .btn{
-      background:#34363d;color:var(--fg);padding:.8rem 1.4rem;font-size:1rem;
-      border:1px solid #474a53;border-radius:10px;cursor:pointer;transition:background .2s,transform .08s;
-    }
-    .btn:hover{background:#3b3e46;transform:translateY(-1px)}
-    .btn.small{padding:.6rem 1rem;font-size:.95rem}
-    .btn-row{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.8rem}
-
-    /* Side floating button (shown on Final only) */
-    .side-fab{
-      position:fixed; right:18px; bottom:18px;
-      width:52px; height:52px; border-radius:50%;
-      background:#34363d; color:var(--fg); border:1px solid #474a53;
-      box-shadow:0 6px 16px rgba(0,0,0,.35); cursor:pointer; font-size:22px;
-      display:flex; align-items:center; justify-content:center; z-index:40;
-    }
-    .side-fab:hover{background:#3b3e46}
-
-    /* Modal */
-    .modal{position:fixed; inset:0; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; z-index:50}
-    .modal-card{
-      background:var(--card); color:var(--fg); border:1px solid var(--card-border); border-radius:14px;
-      width:min(96%, 720px); padding:1rem 1rem 1rem; box-shadow:0 12px 30px rgba(0,0,0,.35);
-    }
-    .modal-card h3{font-size:1.2rem; margin-bottom:.4rem}
-    .modal-card .close-x{
-      float:right; background:transparent; border:1px solid #4a4f58; color:#cfd6df; border-radius:6px; padding:.25rem .45rem; cursor:pointer;
-    }
-    .modal-card .close-x:hover{background:#3b3e46}
-
-    /* Link colors by area */
-    .links-list a,
-    .src-row a{color:var(--link-modal); text-decoration:underline} /* modal/final */
-    .box .src a{color:var(--link-bias); text-decoration:underline}  /* bias buster answers */
-
-    .src-row{margin:.35rem 0}
-    .src-row small{color:#cfd6df}
-
-    /* Cards / layout text */
+    /* Card shell */
     .card{
-      background:var(--card);border:1px solid var(--card-border);border-radius:14px;
-      padding:1rem 1rem;box-shadow:0 12px 30px rgba(0,0,0,.25);
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:14px;
+      padding:1rem 1rem;
+      box-shadow:0 12px 30px rgba(0,0,0,.25);
       display:flex;
       flex-direction:column;
       align-items:center;
       text-align:center;
     }
+    .section{margin-top:12px}
+
     h1,h2,h3{line-height:1.2}
     .muted{color:var(--muted)}
-    .section{margin-top:12px}
     .center-text{text-align:center}
 
-    /* Image blocks */
+    /* Buttons */
+    button{font-family:inherit}
+    .btn{
+      background:#34363d;
+      color:var(--fg);
+      padding:.8rem 1.4rem;
+      font-size:1rem;
+      border:1px solid #474a53;
+      border-radius:10px;
+      cursor:pointer;
+      transition:background .2s,transform .08s;
+    }
+    .btn:hover{
+      background:#3b3e46;
+      transform:translateY(-1px);
+    }
+    .btn.small{
+      padding:.6rem 1rem;
+      font-size:.95rem;
+    }
+    .btn-row{
+      display:flex;
+      gap:.6rem;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:.8rem;
+    }
+
+    /* Floating Sources button (final page only) */
+    .side-fab{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      background:#34363d;
+      color:var(--fg);
+      border:1px solid #474a53;
+      box-shadow:0 6px 16px rgba(0,0,0,.35);
+      cursor:pointer;
+      font-size:22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:40;
+    }
+    .side-fab:hover{background:#3b3e46}
+
+    /* Modal for sources/links */
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:50;
+    }
+    .modal-card{
+      background:var(--card);
+      color:var(--fg);
+      border:1px solid var(--card-border);
+      border-radius:14px;
+      width:min(96%, 720px);
+      padding:1rem 1rem 1rem;
+      box-shadow:0 12px 30px rgba(0,0,0,.35);
+    }
+    .modal-card h3{
+      font-size:1.2rem;
+      margin-bottom:.4rem;
+    }
+    .modal-card .close-x{
+      float:right;
+      background:transparent;
+      border:1px solid #4a4f58;
+      color:#cfd6df;
+      border-radius:6px;
+      padding:.25rem .45rem;
+      cursor:pointer;
+    }
+    .modal-card .close-x:hover{background:#3b3e46}
+
+    .links-list a,
+    .src-row a{
+      color:var(--link-modal);
+      text-decoration:underline;
+    }
+    .src-row{
+      margin:.35rem 0;
+    }
+    .src-row small{
+      color:#cfd6df;
+    }
+
+    /* Image blocks (summary hero, bias cards) */
     .top-image-wrap{
       width:100%;
-      max-width:480px;
+      max-width:360px;      /* back to smaller size */
       border-radius:10px;
       overflow:hidden;
       border:1px solid #4a4f58;
@@ -105,10 +191,10 @@
       object-fit:cover;
     }
 
-    /* Collapsible credit */
+    /* Collapsible credit under summary image */
     details.image-credit{
       width:100%;
-      max-width:480px;
+      max-width:360px;      /* match the image width */
       margin:0 auto 1rem auto;
       background:#2f323a;
       border:1px solid #4a4f58;
@@ -134,29 +220,80 @@
       font-size:.8rem;
     }
 
-    /* ===== Home ===== */
-    .home-title{font-size:1.35rem;margin:8px 0 6px}
-    ol.instructions{margin:.6rem auto 0;max-width:680px;text-align:left;color:#e9eef7;line-height:1.45;padding-left:1.1rem}
-    ol.instructions li{margin:.3rem 0}
+    /* Home content */
+    .home-title{
+      font-size:1.35rem;
+      margin:8px 0 6px;
+    }
+    ol.instructions{
+      margin:.6rem auto 0;
+      max-width:680px;
+      text-align:left;
+      color:#e9eef7;
+      line-height:1.45;
+      padding-left:1.1rem;
+    }
+    ol.instructions li{
+      margin:.3rem 0;
+    }
 
-    /* ===== Part 1: Summary ===== */
-    .summary-title{font-size:1.2rem;color:#e9eef7;margin:.2rem 0 .5rem}
-    .summary-list{margin:.2rem auto 0;line-height:1.5;max-width:760px;text-align:left}
-    .summary-list li{margin:.25rem 0}
+    /* Summary text */
+    .summary-title{
+      font-size:1.2rem;
+      color:#e9eef7;
+      margin:.2rem 0 .5rem;
+    }
+    .summary-list{
+      margin:.2rem auto 0;
+      line-height:1.5;
+      max-width:760px;
+      text-align:left;
+    }
+    .summary-list li{
+      margin:.25rem 0;
+    }
 
-    /* ===== Part 2: Bias Buster ===== */
+    /* Bias Buster layout */
     .progress-top{
-      display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.5rem;
-      width:100%;max-width:760px;text-align:left
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.75rem;
+      margin-bottom:.5rem;
+      width:100%;
+      max-width:760px;
+      text-align:left;
     }
-    .topic-label{font-size:1rem;color:var(--muted);text-align:left}
-    .progress-bar-wrap{flex:1;height:8px;background:#3a3d46;border-radius:5px;overflow:hidden}
-    #progress-bar{height:100%;width:0%;background:var(--accent);transition:width .25s ease}
+    .topic-label{
+      font-size:1rem;
+      color:var(--muted);
+      text-align:left;
+    }
+    .progress-bar-wrap{
+      flex:1;
+      height:8px;
+      background:#3a3d46;
+      border-radius:5px;
+      overflow:hidden;
+    }
+    #progress-bar{
+      height:100%;
+      width:0%;
+      background:var(--accent);
+      transition:width .25s ease;
+    }
     .meta-row{
-      display:flex;align-items:center;justify-content:flex-end;margin:.4rem 0 .7rem;color:var(--muted);
-      width:100%;max-width:760px
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      margin:.4rem 0 .7rem;
+      color:var(--muted);
+      width:100%;
+      max-width:760px;
     }
-    #progress{font-weight:600}
+    #progress{
+      font-weight:600;
+    }
 
     #answer-history{
       display:grid;
@@ -183,8 +320,16 @@
       color:#202020;
       text-align:left;
     }
-    .box.correct{border-color:#28a745;background:var(--green-bg);color:var(--green-fg)}
-    .box.incorrect{border-color:#dc3545;background:var(--red-bg);color:var(--red-fg)}
+    .box.correct{
+      border-color:#28a745;
+      background:var(--green-bg);
+      color:var(--green-fg);
+    }
+    .box.incorrect{
+      border-color:#dc3545;
+      background:var(--red-bg);
+      color:var(--red-fg);
+    }
 
     .box-img-wrap{
       width:100%;
@@ -211,10 +356,19 @@
     }
 
     #headline{
-      background:var(--tile);color:#111;padding:1.1rem 1rem;border-radius:14px;border:1px solid var(--tile-border);
-      box-shadow:0 2px 0 #cfcfcf;margin:.2rem 0 1rem;min-height:3.8rem;font-size:1.2rem;line-height:1.35;
+      background:var(--tile);
+      color:#111;
+      padding:1.1rem 1rem;
+      border-radius:14px;
+      border:1px solid var(--tile-border);
+      box-shadow:0 2px 0 #cfcfcf;
+      margin:.2rem 0 1rem;
+      min-height:3.8rem;
+      font-size:1.2rem;
+      line-height:1.35;
       text-align:center;
-      width:100%;max-width:760px;
+      width:100%;
+      max-width:760px;
     }
 
     .options{
@@ -226,54 +380,128 @@
       max-width:760px;
     }
     .option-btn{
-      background:var(--tile);color:#111;padding:.9rem .8rem;border-radius:12px;border:1px solid var(--tile-border);
-      cursor:pointer;transition:transform .06s ease,background .15s ease;box-shadow:0 2px 0 #cfcfcf;font-weight:600;
+      background:var(--tile);
+      color:#111;
+      padding:.9rem .8rem;
+      border-radius:12px;
+      border:1px solid var(--tile-border);
+      cursor:pointer;
+      transition:transform .06s ease,background .15s ease;
+      box-shadow:0 2px 0 #cfcfcf;
+      font-weight:600;
       text-align:center;
     }
-    .option-btn:hover{background:#ededed;transform:translateY(-1px)}
-    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    .option-btn:hover{
+      background:#ededed;
+      transform:translateY(-1px);
+    }
+
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-6px)}
+      75%{transform:translateX(6px)}
+    }
     .shake{animation:shake .22s}
 
-    /* ===== Part 3: Timeline ===== */
+    /* Timeline layout */
     .tl-head{
-      display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;
-      width:100%;max-width:760px;text-align:left;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.75rem;
+      flex-wrap:wrap;
+      width:100%;
+      max-width:760px;
+      text-align:left;
     }
-    .lives{color:#ffb3b3;font-weight:600}
+    .lives{
+      color:#ffb3b3;
+      font-weight:600;
+    }
     .event-list{
-      display:flex;flex-direction:column;gap:.6rem;list-style:none;margin:.8rem 0 0;
-      width:100%;max-width:760px;text-align:left
+      display:flex;
+      flex-direction:column;
+      gap:.6rem;
+      list-style:none;
+      margin:.8rem 0 0;
+      width:100%;
+      max-width:760px;
+      text-align:left;
     }
     .event{
-      background:#34363d;border:1px solid #4a4f58;border-radius:12px;width:100%;min-height:86px;cursor:grab;user-select:none;
-      display:flex;align-items:flex-start;justify-content:flex-start;padding:.85rem .9rem;text-align:left;
-      color:#e9eef7;line-height:1.35;white-space:normal;word-break:break-word;
+      background:#34363d;
+      border:1px solid #4a4f58;
+      border-radius:12px;
+      width:100%;
+      min-height:86px;
+      cursor:grab;
+      user-select:none;
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-start;
+      padding:.85rem .9rem;
+      text-align:left;
+      color:#e9eef7;
+      line-height:1.35;
+      white-space:normal;
+      word-break:break-word;
       transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
     }
     .event:hover{transform:translateY(-2px)}
     .event.dragging{opacity:.8}
-    .event.correct{border-color:#28a745;box-shadow:0 0 0 2px rgba(40,167,69,.25) inset}
-    .event.incorrect{border-color:#dc3545;box-shadow:0 0 0 2px rgba(220,53,69,.25) inset}
+    .event.correct{
+      border-color:#28a745;
+      box-shadow:0 0 0 2px rgba(40,167,69,.25) inset;
+    }
+    .event.incorrect{
+      border-color:#dc3545;
+      box-shadow:0 0 0 2px rgba(220,53,69,.25) inset;
+    }
 
     .tl-actions{
-      display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.8rem;
-      width:100%;max-width:760px;
+      display:flex;
+      gap:.6rem;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:.8rem;
+      width:100%;
+      max-width:760px;
     }
     .score{
-      margin-top:.5rem;color:var(--muted);text-align:center;
-      width:100%;max-width:760px;
+      margin-top:.5rem;
+      color:var(--muted);
+      text-align:center;
+      width:100%;
+      max-width:760px;
     }
 
-    /* ===== Final ===== */
-    .final-big{font-size:1.3rem;margin-bottom:.25rem;text-align:center}
-    .final-sub{color:#e9eef7;margin:.25rem 0 .6rem;text-align:center}
+    /* Final results */
+    .final-big{
+      font-size:1.3rem;
+      margin-bottom:.25rem;
+      text-align:center;
+    }
+    .final-sub{
+      color:#e9eef7;
+      margin:.25rem 0 .6rem;
+      text-align:center;
+    }
+
+    /* Small screens */
+    @media(max-width:560px){
+      .brand img{height:52px}
+      .brand .logo{font-size:1.9rem}
+      #headline{font-size:1.05rem}
+      .options{grid-template-columns:1fr}
+      #answer-history{grid-template-columns:1fr 1fr 1fr}
+    }
   </style>
 </head>
 <body>
   <div class="center">
     <main class="screen" aria-live="polite">
 
-      <!-- ===== GLOBAL BRANDING ===== -->
+      <!-- Global header -->
       <div class="brand">
         <img src="nextelect-logo.png" alt="NextElect Logo"/>
         <h1 class="logo">NextElect — Issue of the Week</h1>
@@ -281,7 +509,7 @@
 
       <!-- ===== HOME ===== -->
       <section id="home" class="card center-text">
-        <!-- Removed image from HOME per request -->
+        <!-- Note: image moved off home to summary -->
         <h2 class="home-title">Welcome to NextElect</h2>
         <p class="muted">Your weekly, unbiased practice on news reading.</p>
         <ol class="instructions">
@@ -294,12 +522,12 @@
 
       <!-- ===== PART 1: SUMMARY ===== -->
       <section id="summary" class="card section hidden">
-        <!-- Issue image now lives HERE -->
+
+        <!-- Issue image (now in Summary, with credit dropdown) -->
         <div class="top-image-wrap" id="issue-image-wrap">
           <img id="issue-image" src="" alt="Issue image preview"/>
         </div>
 
-        <!-- Collapsible credit for that image -->
         <details id="issue-image-credit" class="image-credit hidden">
           <summary>Image credit / source</summary>
           <div style="margin-top:.4rem">
@@ -321,7 +549,8 @@
 
       <!-- ===== PART 2: BIAS BUSTER ===== -->
       <section id="bias" class="card section hidden">
-        <!-- current headline image (for the headline being answered) -->
+
+        <!-- Current headline image -->
         <div class="top-image-wrap hidden" id="headline-image-wrap">
           <img id="headline-image" src="" alt="Headline image preview"/>
         </div>
@@ -330,14 +559,18 @@
           <div id="topic-label" class="topic-label">Part 2 · Bias Buster</div>
           <div class="progress-bar-wrap"><div id="progress-bar"></div></div>
         </div>
-        <div class="meta-row"><div id="progress">0 / 3</div></div>
 
-        <!-- history boxes with per-article image + result -->
+        <div class="meta-row">
+          <div id="progress">0 / 3</div>
+        </div>
+
+        <!-- Answer history with per-article image + correctness + source -->
         <div id="answer-history"></div>
 
-        <!-- current headline text -->
+        <!-- Current headline text -->
         <div id="headline"></div>
 
+        <!-- Choices -->
         <div class="options">
           <button class="option-btn" data-choice="left">Left</button>
           <button class="option-btn" data-choice="center">Center</button>
@@ -361,6 +594,7 @@
           <button id="reveal" class="btn small">Reveal</button>
           <button id="to-final-after-reveal" class="btn small hidden">Go to Results</button>
         </div>
+
         <p id="tl-score" class="score"></p>
       </section>
 
@@ -373,7 +607,7 @@
     </main>
   </div>
 
-  <!-- Floating Sources & Links button (only visible on Final) -->
+  <!-- Floating Sources & Links button (Final only) -->
   <button id="fab-sources" class="side-fab hidden" aria-label="Sources & Links">🔗</button>
 
   <!-- Sources & Links Modal -->
@@ -402,21 +636,22 @@
     const CONFIG = {
       dateLabel: "10/16/2025",
 
-      // Image for the issue summary page
+      // Image for the summary page
       issueImage: "https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
-      // What to show in the dropdown under the summary image
-      issueImageCredit: "Associated Press / White House construction photo (Oct 2025). URL: https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
+
+      // Optional descriptive credit. We'll display the actual URL separately in the dropdown.
+      issueImageCredit: "Associated Press / White House construction photo (Oct 2025).",
 
       issue: {
         title: "White House Ballroom Construction Fight",
         summaryBullets: [
-          "The White House said it will submit plans for President Donald Trump's $250 million White House ballroom project to a federal oversight body, even though demolition work already began.",
+          "The White House said it will submit plans for President Donald Trump's $250 million White House ballroom project to a federal oversight body, even though demolition work has already begun.",
           "Trump praised the construction noise for the new ballroom, which would be a major physical change to the historic building.",
           "The Treasury Department told employees not to share photos of demolition work in the East Wing after images spread online."
         ]
       },
 
-      // Bias Buster (3 headlines). Each can have its own image.
+      // Bias Buster headlines (3). Each can have its own image.
       biasRound: [
         {
           text: "Trump’s White House Ballroom Sparks Questions About Funding and Ethics",
@@ -441,7 +676,7 @@
         }
       ],
 
-      // Timeline: correct chronological order is ascending by id (1..5)
+      // Timeline events in correct chronological order by id
       timelineEvents: [
         { id: 1, text: "The White House Announces Ballroom Construction" },
         { id: 2, text: "Demolition and Construction begin on the ballroom" },
@@ -454,11 +689,13 @@
     };
 
     /* =========================
-       Helpers
+       DOM helpers
        ========================= */
     const $ = (sel) => document.querySelector(sel);
     const $$ = (sel) => Array.from(document.querySelectorAll(sel));
-    const esc = (s) => (s||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+    const esc = (s) => (s||"").replace(/[&<>"']/g, m => (
+      {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]
+    ));
     const cap = (s) => s ? s[0].toUpperCase() + s.slice(1) : s;
 
     function showOnly(id){
@@ -471,27 +708,29 @@
        HOME → SUMMARY
        ========================= */
     $('#start-btn').addEventListener('click', () => {
-      // Fill summary header text
+      // Fill summary title/date
       $('#issue-title').textContent = `${CONFIG.dateLabel} · ${CONFIG.issue.title}`;
 
-      // Fill summary bullets
-      const list = $('#issue-summary'); list.innerHTML = '';
+      // Fill the bullet points
+      const list = $('#issue-summary');
+      list.innerHTML = '';
       CONFIG.issue.summaryBullets.forEach(b => {
-        const li = document.createElement('li'); li.textContent = b; list.appendChild(li);
+        const li = document.createElement('li');
+        li.textContent = b;
+        list.appendChild(li);
       });
 
-      // Fill summary image + credit
+      // Fill the summary image and credit dropdown
       if (CONFIG.issueImage && CONFIG.issueImage.trim() !== "") {
         $('#issue-image').src = CONFIG.issueImage;
         $('#issue-image').alt = CONFIG.issue.title || "Issue image";
         $('#issue-image-wrap').classList.remove('hidden');
 
-        if (CONFIG.issueImageCredit && CONFIG.issueImageCredit.trim() !== "") {
-          $('#issue-image-credit-url').textContent = CONFIG.issueImage;
-          $('#issue-image-credit').classList.remove('hidden');
-        } else {
-          $('#issue-image-credit').classList.add('hidden');
-        }
+        // Fill dropdown credit and show it
+        $('#issue-image-credit-url').textContent = CONFIG.issueImage;
+        // We show both: the descriptive credit, and the URL in code block
+        // If there's no descriptive credit, we still show the dropdown because you asked
+        $('#issue-image-credit').classList.remove('hidden');
       } else {
         $('#issue-image-wrap').classList.add('hidden');
         $('#issue-image-credit').classList.add('hidden');
@@ -508,12 +747,19 @@
       showOnly('bias');
     });
 
-    // ===== Bias Buster state =====
+    /* =========================
+       BIAS BUSTER LOGIC
+       ========================= */
     const TOTAL = 3;
-    let bbIndex = 0, bbAnswered = 0, bbScore = 0;
+    let bbIndex = 0;
+    let bbAnswered = 0;
+    let bbScore = 0;
 
     function initBias(){
-      bbIndex = 0; bbAnswered = 0; bbScore = 0;
+      bbIndex = 0;
+      bbAnswered = 0;
+      bbScore = 0;
+
       $('#topic-label').textContent = "Part 2 · Bias Buster";
       $('#progress-bar').style.width = '0%';
       $('#progress').textContent = `0 / ${TOTAL}`;
@@ -528,7 +774,7 @@
       // Headline text
       $('#headline').textContent = q.text;
 
-      // Headline image (question view)
+      // Question image
       if (q.image && q.image.trim() !== "") {
         $('#headline-image').src = q.image;
         $('#headline-image').alt = q.text;
@@ -541,14 +787,12 @@
       $$('.option-btn').forEach(b => b.disabled = false);
     }
 
-    // Build a history box with its own image on top
     function appendHistory(correct, item){
       const box = document.createElement('div');
       box.className = 'box ' + (correct ? 'correct' : 'incorrect');
-
       const status = correct ? '✅ Correct' : '❌ Correct bias';
 
-      // optional image
+      // optional per-article image
       const imgHTML = (item.image && item.image.trim() !== "")
         ? `<div class="box-img-wrap"><img src="${esc(item.image)}" alt="${esc(item.text)}"></div>`
         : '';
@@ -556,19 +800,24 @@
       box.innerHTML = `
         ${imgHTML}
         <div><strong>${status}:</strong> ${cap(item.answer)}</div>
-        <div class="src">Source: ${esc(item.author||'')}${
-          item.url ? ` • <a href="${esc(item.url)}" target="_blank" rel="noopener">Open</a>` : ''
-        }</div>
+        <div class="src">
+          Source: ${esc(item.author||'')}
+          ${item.url ? ` • <a href="${esc(item.url)}" target="_blank" rel="noopener">Open</a>` : ''}
+        </div>
       `;
       $('#answer-history').appendChild(box);
     }
 
     function handleBias(choice){
       const q = CONFIG.biasRound[bbIndex];
+
+      // Lock buttons
       $$('.option-btn').forEach(b => b.disabled = true);
 
+      // Score
       const correct = (choice === q.answer);
       if(correct) bbScore++;
+
       appendHistory(correct, q);
 
       bbAnswered++;
@@ -577,24 +826,29 @@
 
       setTimeout(() => {
         bbIndex++;
-        if(bbIndex < TOTAL){
+        if (bbIndex < TOTAL){
           showBBQuestion();
         } else {
+          // straight to timeline
           initTimeline();
           showOnly('timeline');
         }
       }, 450);
     }
 
-    $$('.option-btn').forEach(btn => btn.addEventListener('click', () => handleBias(btn.dataset.choice)));
+    $$('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => handleBias(btn.dataset.choice));
+    });
 
     /* =========================
-       TIMELINE (vertical DnD)
+       TIMELINE LOGIC
        ========================= */
     let lives = CONFIG.timelineLives;
-    let startLayout = []; // for Reset
+    let startLayout = []; // remember layout for Reset
 
-    function hearts(n){ return '❤️'.repeat(Math.max(0,n)); }
+    function hearts(n){
+      return '❤️'.repeat(Math.max(0,n));
+    }
     function updateLives(){
       $('#lives').innerHTML = `Lives: ${lives} ${hearts(lives)}`;
     }
@@ -635,12 +889,19 @@
       wireDnDVertical();
     }
 
-    function currentIds(){ return $$('#event-list .event').map(n => parseInt(n.dataset.id,10)); }
-    function correctIds(){ return [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id).map(e => e.id); }
+    function currentIds(){
+      return $$('#event-list .event').map(n => parseInt(n.dataset.id,10));
+    }
+    function correctIds(){
+      return [...CONFIG.timelineEvents]
+        .sort((a,b)=>a.id - b.id)
+        .map(e => e.id);
+    }
 
     function scoreTimeline({reveal=false} = {}){
       const order = currentIds();
       const correct = correctIds();
+
       let hits = 0;
       $$('#event-list .event').forEach((n,i) => {
         const ok = order[i] === correct[i];
@@ -648,11 +909,14 @@
         n.classList.toggle('correct', ok);
         n.classList.toggle('incorrect', !ok && !reveal);
       });
+
       const total = correct.length;
       const pct = Math.round((hits/total)*100);
+
       $('#tl-score').textContent = reveal
         ? `Correct order shown. (Last attempt: ${hits}/${total})`
         : `You placed ${hits} of ${total} correctly (${pct}%). Lives left: ${lives}`;
+
       return hits === total;
     }
 
@@ -666,19 +930,29 @@
           el.classList.add('dragging');
           e.dataTransfer.effectAllowed = 'move';
           e.dataTransfer.setData('text/plain', el.dataset.id);
+
+          // clear visual marks at new drag start
           $$('#event-list .event').forEach(n => n.classList.remove('correct','incorrect'));
         });
+
         el.addEventListener('dragend', () => {
-          if(dragging){ dragging.classList.remove('dragging'); dragging = null; }
+          if(dragging){
+            dragging.classList.remove('dragging');
+            dragging = null;
+          }
         });
       });
 
       list.addEventListener('dragover', e => {
         e.preventDefault();
         if(!dragging) return;
+
         const after = closestVertical(list, e.clientY, dragging);
-        if(after == null) list.appendChild(dragging);
-        else list.insertBefore(dragging, after);
+        if(after == null){
+          list.appendChild(dragging);
+        } else {
+          list.insertBefore(dragging, after);
+        }
       });
 
       list.addEventListener('drop', e => e.preventDefault());
@@ -693,19 +967,28 @@
         const r = el.getBoundingClientRect();
         const cy = r.top + r.height/2;
         const d = Math.abs(y - cy);
-        if(d < best.d) best = {el, d};
+        if(d < best.d){
+          best = {el, d};
+        }
       }
       if(!best.el) return null;
+
       const r = best.el.getBoundingClientRect();
       const after = y > (r.top + r.height/2);
       return after ? best.el.nextSibling : best.el;
     }
 
-    // Timeline checks
+    // Check order button
     $('#check-order').addEventListener('click', () => {
       const win = scoreTimeline({reveal:false});
-      if(win){ goFinal(); return; }
-      lives--; updateLives();
+      if(win){
+        goFinal();
+        return;
+      }
+
+      lives--;
+      updateLives();
+
       if(lives <= 0){
         $('#tl-score').textContent = "Out of lives. Showing correct order, then taking you to results…";
         revealOrder(true);
@@ -719,12 +1002,15 @@
       const ordered = [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id);
       buildTimeline(ordered);
       scoreTimeline({reveal:true});
+
       if(!fromLoss){
         $('#to-final-after-reveal').classList.remove('hidden');
         $('#tl-score').textContent = "Here's the correct order. Ready to see your results?";
       }
     }
+
     $('#reveal').addEventListener('click', () => revealOrder(false));
+
     $('#to-final-after-reveal').addEventListener('click', () => goFinal());
 
     $('#reshuffle').addEventListener('click', () => {
@@ -742,7 +1028,7 @@
     });
 
     /* =========================
-       FINAL (score + sources)
+       FINAL SCORE + SOURCES
        ========================= */
     function goFinal(){
       const livesLeft = Math.max(0, lives);
@@ -762,7 +1048,7 @@
       }
       $('#final-line').textContent = msg;
 
-      // Build Sources list with correctness
+      // Build "Sources & Links" content
       const fs = $('#final-sources');
       fs.innerHTML = '';
       CONFIG.biasRound.forEach((item, i) => {
@@ -781,7 +1067,7 @@
       $('#fab-sources').classList.remove('hidden');
     }
 
-    // Floating Sources button + modal
+    // floating Sources button / modal wiring
     const fab = $('#fab-sources');
     const modal = $('#sources-modal');
     const closeBtn = $('#sources-close');
