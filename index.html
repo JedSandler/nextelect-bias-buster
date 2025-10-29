@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NextElect — Issue of the Week (Draft 7)</title>
+  <title>NextElect — Issue of the Week (Draft 8)</title>
   <style>
     /* ===== Theme / Base ===== */
     *{margin:0;padding:0;box-sizing:border-box}
@@ -31,19 +31,27 @@
       min-height:100vh;
       display:flex;
       flex-direction:column;
+      overflow:hidden; /* lock page height so there's no scrolling */
     }
     .hidden{display:none!important}
+
     .center{
       flex:1;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:12px 12px 24px;
+      padding:12px;
+      /* we don't want the inner content to force scroll either */
+      overflow:hidden;
     }
     .screen{
       width:100%;
       max-width:920px;
       margin:0 auto;
+      max-height:100%;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
     }
 
     /* Branding row */
@@ -53,27 +61,32 @@
       justify-content:center;
       gap:.8rem;
       margin:0 0 12px;
+      flex-shrink:0;
     }
     .brand img{height:64px}
-    .brand .logo{font-size:2.2rem}
+    .brand .logo{font-size:2.2rem; text-align:center;}
 
-    /* Card shell */
+    /* Card shell (default vertical stack) */
     .card{
       background:var(--card);
       border:1px solid var(--card-border);
       border-radius:14px;
-      padding:1rem 1rem;
+      padding:1rem;
       box-shadow:0 12px 30px rgba(0,0,0,.25);
       display:flex;
       flex-direction:column;
       align-items:center;
       text-align:center;
+      flex-shrink:0;
+      max-height:calc(100vh - 150px); /* stay on screen with header */
+      overflow:hidden;
     }
     .section{margin-top:12px}
 
     h1,h2,h3{line-height:1.2}
     .muted{color:var(--muted)}
     .center-text{text-align:center}
+    .left-text{text-align:left}
 
     /* Buttons */
     button{font-family:inherit}
@@ -140,7 +153,7 @@
       border:1px solid var(--card-border);
       border-radius:14px;
       width:min(96%, 720px);
-      padding:1rem 1rem 1rem;
+      padding:1rem;
       box-shadow:0 12px 30px rgba(0,0,0,.35);
     }
     .modal-card h3{
@@ -170,41 +183,53 @@
       color:#cfd6df;
     }
 
-    /* Image blocks (summary hero, bias cards) */
+    /* ===== IMAGE BLOCKS ===== */
+    /* smaller image for summary right-side */
+    .summary-media-col{
+      flex-shrink:0;
+      width:220px;
+      max-width:220px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:left;
+      gap:.6rem;
+    }
+
     .top-image-wrap{
       width:100%;
-      max-width:360px;      /* back to smaller size */
       border-radius:10px;
       overflow:hidden;
       border:1px solid #4a4f58;
       box-shadow:0 8px 20px rgba(0,0,0,.4);
-      margin:0 auto 1rem auto;
       background:#1f2024;
       display:flex;
       align-items:center;
       justify-content:center;
+      max-height:140px;
+      flex-shrink:0;
     }
     .top-image-wrap img{
       display:block;
       width:100%;
-      height:auto;
+      height:100%;
       object-fit:cover;
     }
 
-    /* Collapsible credit under summary image */
+    /* compact credit box under summary image */
     details.image-credit{
       width:100%;
-      max-width:360px;      /* match the image width */
-      margin:0 auto 1rem auto;
       background:#2f323a;
       border:1px solid #4a4f58;
       border-radius:8px;
-      padding:.6rem .8rem;
+      padding:.5rem .6rem;
       color:var(--muted);
       text-align:left;
-      font-size:.9rem;
+      font-size:.8rem;
       line-height:1.4;
       box-shadow:0 6px 16px rgba(0,0,0,.35);
+      max-height:120px;
+      overflow:auto;
     }
     details.image-credit summary{
       cursor:pointer;
@@ -212,15 +237,16 @@
       font-weight:600;
       outline:none;
       list-style:none;
+      font-size:.8rem;
     }
     details.image-credit summary::-webkit-details-marker{display:none}
     details.image-credit code{
       color:#cfe2ff;
       word-break:break-all;
-      font-size:.8rem;
+      font-size:.7rem;
     }
 
-    /* Home content */
+    /* ===== HOME ===== */
     .home-title{
       font-size:1.35rem;
       margin:8px 0 6px;
@@ -237,23 +263,70 @@
       margin:.3rem 0;
     }
 
-    /* Summary text */
-    .summary-title{
-      font-size:1.2rem;
-      color:#e9eef7;
-      margin:.2rem 0 .5rem;
-    }
-    .summary-list{
-      margin:.2rem auto 0;
-      line-height:1.5;
-      max-width:760px;
+    /* ===== SUMMARY LAYOUT ===== */
+    /* summary card is now horizontal: left text / right image */
+    #summary.card{
+      flex-direction:row;
+      align-items:flex-start;
+      justify-content:space-between;
       text-align:left;
+      padding:1rem 1rem;
+      gap:1rem;
     }
-    .summary-list li{
-      margin:.25rem 0;
+    .summary-text-col{
+      flex:1;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:flex-start;
+      max-height:100%;
+      overflow:hidden;
     }
 
-    /* Bias Buster layout */
+    .summary-topline{
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+      flex-shrink:0;
+      margin-bottom:.5rem;
+    }
+    .summary-topline h2{
+      font-size:1.05rem;
+      line-height:1.2;
+      margin:0;
+      color:#fff;
+    }
+    .summary-topline img{
+      height:32px;
+    }
+
+    .summary-title{
+      font-size:1rem;
+      color:#e9eef7;
+      margin:0 0 .5rem 0;
+      font-weight:600;
+      max-width:100%;
+      text-align:left;
+    }
+
+    .summary-list{
+      line-height:1.4;
+      font-size:.9rem;
+      color:#f2f2f2;
+      max-width:100%;
+      overflow:hidden;
+    }
+    .summary-list li{
+      margin:.4rem 0;
+    }
+
+    .start-btn-row{
+      margin-top:.8rem;
+      flex-shrink:0;
+    }
+
+    /* ===== BIAS BUSTER ===== */
     .progress-top{
       display:flex;
       align-items:center;
@@ -303,6 +376,7 @@
       width:100%;
       max-width:760px;
       text-align:left;
+      flex-shrink:0;
     }
 
     .box{
@@ -369,6 +443,30 @@
       text-align:center;
       width:100%;
       max-width:760px;
+      flex-shrink:0;
+    }
+
+    /* headline image above headline in bias */
+    #headline-image-wrap{
+      width:220px;
+      max-width:220px;
+      border-radius:10px;
+      overflow:hidden;
+      border:1px solid #4a4f58;
+      box-shadow:0 8px 20px rgba(0,0,0,.4);
+      background:#1f2024;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      max-height:140px;
+      flex-shrink:0;
+      margin-bottom:1rem;
+    }
+    #headline-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
 
     .options{
@@ -378,6 +476,7 @@
       margin:.2rem 0 0;
       width:100%;
       max-width:760px;
+      flex-shrink:0;
     }
     .option-btn{
       background:var(--tile);
@@ -396,14 +495,7 @@
       transform:translateY(-1px);
     }
 
-    @keyframes shake{
-      0%,100%{transform:translateX(0)}
-      25%{transform:translateX(-6px)}
-      75%{transform:translateX(6px)}
-    }
-    .shake{animation:shake .22s}
-
-    /* Timeline layout */
+    /* Timeline */
     .tl-head{
       display:flex;
       align-items:center;
@@ -427,25 +519,27 @@
       width:100%;
       max-width:760px;
       text-align:left;
+      flex-shrink:0;
     }
     .event{
       background:#34363d;
       border:1px solid #4a4f58;
       border-radius:12px;
       width:100%;
-      min-height:86px;
+      min-height:70px;
       cursor:grab;
       user-select:none;
       display:flex;
       align-items:flex-start;
       justify-content:flex-start;
-      padding:.85rem .9rem;
+      padding:.7rem .8rem;
       text-align:left;
       color:#e9eef7;
       line-height:1.35;
       white-space:normal;
       word-break:break-word;
       transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
+      font-size:.9rem;
     }
     .event:hover{transform:translateY(-2px)}
     .event.dragging{opacity:.8}
@@ -466,13 +560,16 @@
       margin-top:.8rem;
       width:100%;
       max-width:760px;
+      flex-shrink:0;
     }
     .score{
-      margin-top:.5rem;
+      margin-top:.4rem;
       color:var(--muted);
       text-align:center;
       width:100%;
       max-width:760px;
+      font-size:.9rem;
+      flex-shrink:0;
     }
 
     /* Final results */
@@ -487,13 +584,24 @@
       text-align:center;
     }
 
-    /* Small screens */
-    @media(max-width:560px){
-      .brand img{height:52px}
-      .brand .logo{font-size:1.9rem}
-      #headline{font-size:1.05rem}
-      .options{grid-template-columns:1fr}
-      #answer-history{grid-template-columns:1fr 1fr 1fr}
+    /* Prevent wrap panic on tiny screens, but still try to avoid scroll:
+       On really narrow screens, stack summary again.
+    */
+    @media(max-width:600px){
+      #summary.card{
+        flex-direction:column;
+        align-items:flex-start;
+        justify-content:flex-start;
+        max-height:none;
+        overflow:auto;
+      }
+      .summary-media-col{
+        width:100%;
+        max-width:220px;
+      }
+      body{
+        overflow:auto;
+      }
     }
   </style>
 </head>
@@ -508,8 +616,7 @@
       </div>
 
       <!-- ===== HOME ===== -->
-      <section id="home" class="card center-text">
-        <!-- Note: image moved off home to summary -->
+      <section id="home" class="card">
         <h2 class="home-title">Welcome to NextElect</h2>
         <p class="muted">Your weekly, unbiased practice on news reading.</p>
         <ol class="instructions">
@@ -522,36 +629,44 @@
 
       <!-- ===== PART 1: SUMMARY ===== -->
       <section id="summary" class="card section hidden">
-
-        <!-- Issue image (now in Summary, with credit dropdown) -->
-        <div class="top-image-wrap" id="issue-image-wrap">
-          <img id="issue-image" src="" alt="Issue image preview"/>
-        </div>
-
-        <details id="issue-image-credit" class="image-credit hidden">
-          <summary>Image credit / source</summary>
-          <div style="margin-top:.4rem">
-            <div style="color:#d5d5d5;font-size:.8rem;line-height:1.4">
-              <div>This image relates to this week's issue.</div>
-              <div>URL: <code id="issue-image-credit-url"></code></div>
-            </div>
+        <!-- LEFT COLUMN: text -->
+        <div class="summary-text-col">
+          <div class="summary-topline">
+            <img src="nextelect-logo.png" alt="NextElect Logo"/>
+            <h2>Part 1 · Summary</h2>
           </div>
-        </details>
 
-        <h2>Part 1 · Summary</h2>
-        <div style="margin:.3rem 0 .6rem">
-          <img src="nextelect-logo.png" alt="NextElect Logo" style="height:44px;vertical-align:middle"/>
+          <div id="issue-title" class="summary-title"></div>
+
+          <ul id="issue-summary" class="summary-list"></ul>
+
+          <div class="start-btn-row">
+            <button id="to-bias" class="btn">Start Playing</button>
+          </div>
         </div>
-        <div id="issue-title" class="summary-title"></div>
-        <ul id="issue-summary" class="summary-list"></ul>
-        <div class="btn-row"><button id="to-bias" class="btn">Start Playing</button></div>
+
+        <!-- RIGHT COLUMN: image + credit -->
+        <div class="summary-media-col">
+          <div class="top-image-wrap" id="issue-image-wrap">
+            <img id="issue-image" src="" alt="Issue image preview"/>
+          </div>
+
+          <details id="issue-image-credit" class="image-credit hidden">
+            <summary>Image credit / source</summary>
+            <div style="margin-top:.4rem">
+              <div style="color:#d5d5d5;line-height:1.4">
+                <div id="issue-image-credit-desc" style="margin-bottom:.4rem;font-size:.75rem;"></div>
+                <div style="font-size:.7rem;">URL: <code id="issue-image-credit-url"></code></div>
+              </div>
+            </div>
+          </details>
+        </div>
       </section>
 
       <!-- ===== PART 2: BIAS BUSTER ===== -->
-      <section id="bias" class="card section hidden">
-
-        <!-- Current headline image -->
-        <div class="top-image-wrap hidden" id="headline-image-wrap">
+      <section id="bias" class="card section hidden" style="overflow:auto;">
+        <!-- Bias round image for current question -->
+        <div id="headline-image-wrap" class="hidden">
           <img id="headline-image" src="" alt="Headline image preview"/>
         </div>
 
@@ -564,10 +679,10 @@
           <div id="progress">0 / 3</div>
         </div>
 
-        <!-- Answer history with per-article image + correctness + source -->
+        <!-- Answer history -->
         <div id="answer-history"></div>
 
-        <!-- Current headline text -->
+        <!-- Headline text -->
         <div id="headline"></div>
 
         <!-- Choices -->
@@ -579,7 +694,7 @@
       </section>
 
       <!-- ===== PART 3: TIMELINE ===== -->
-      <section id="timeline" class="card section hidden">
+      <section id="timeline" class="card section hidden" style="overflow:auto;">
         <div class="tl-head">
           <h2>Part 3 · Timeline (earliest → latest)</h2>
           <div class="lives" id="lives"></div>
@@ -636,11 +751,11 @@
     const CONFIG = {
       dateLabel: "10/16/2025",
 
-      // Image for the summary page
+      // Summary image info (shown on the right of Part 1)
       issueImage: "https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
-
-      // Optional descriptive credit. We'll display the actual URL separately in the dropdown.
-      issueImageCredit: "Associated Press / White House construction photo (Oct 2025).",
+      issueImageCreditDesc: "Associated Press / White House construction photo (Oct 2025).",
+      // We'll also show the direct URL in the dropdown
+      // (we always show it, so no need to toggle separately)
 
       issue: {
         title: "White House Ballroom Construction Fight",
@@ -651,7 +766,7 @@
         ]
       },
 
-      // Bias Buster headlines (3). Each can have its own image.
+      // Bias Buster headlines
       biasRound: [
         {
           text: "Trump’s White House Ballroom Sparks Questions About Funding and Ethics",
@@ -676,7 +791,7 @@
         }
       ],
 
-      // Timeline events in correct chronological order by id
+      // Timeline order (correct order is ascending by id)
       timelineEvents: [
         { id: 1, text: "The White House Announces Ballroom Construction" },
         { id: 2, text: "Demolition and Construction begin on the ballroom" },
@@ -701,7 +816,7 @@
     function showOnly(id){
       ['home','summary','bias','timeline','final'].forEach(x => $('#'+x).classList.add('hidden'));
       $('#'+id).classList.remove('hidden');
-      window.scrollTo({top:0, behavior:'smooth'});
+      window.scrollTo({top:0, behavior:'instant'});
     }
 
     /* =========================
@@ -711,7 +826,7 @@
       // Fill summary title/date
       $('#issue-title').textContent = `${CONFIG.dateLabel} · ${CONFIG.issue.title}`;
 
-      // Fill the bullet points
+      // Fill bullet list
       const list = $('#issue-summary');
       list.innerHTML = '';
       CONFIG.issue.summaryBullets.forEach(b => {
@@ -720,16 +835,14 @@
         list.appendChild(li);
       });
 
-      // Fill the summary image and credit dropdown
+      // Summary image + credit on the right
       if (CONFIG.issueImage && CONFIG.issueImage.trim() !== "") {
         $('#issue-image').src = CONFIG.issueImage;
         $('#issue-image').alt = CONFIG.issue.title || "Issue image";
         $('#issue-image-wrap').classList.remove('hidden');
 
-        // Fill dropdown credit and show it
+        $('#issue-image-credit-desc').textContent = CONFIG.issueImageCreditDesc || "";
         $('#issue-image-credit-url').textContent = CONFIG.issueImage;
-        // We show both: the descriptive credit, and the URL in code block
-        // If there's no descriptive credit, we still show the dropdown because you asked
         $('#issue-image-credit').classList.remove('hidden');
       } else {
         $('#issue-image-wrap').classList.add('hidden');
@@ -748,7 +861,7 @@
     });
 
     /* =========================
-       BIAS BUSTER LOGIC
+       BIAS BUSTER
        ========================= */
     const TOTAL = 3;
     let bbIndex = 0;
@@ -764,6 +877,7 @@
       $('#progress-bar').style.width = '0%';
       $('#progress').textContent = `0 / ${TOTAL}`;
       $('#answer-history').innerHTML = '';
+      $('#headline-image-wrap').classList.add('hidden');
 
       showBBQuestion();
     }
@@ -771,10 +885,10 @@
     function showBBQuestion(){
       const q = CONFIG.biasRound[bbIndex];
 
-      // Headline text
+      // headline text
       $('#headline').textContent = q.text;
 
-      // Question image
+      // per-question image (small)
       if (q.image && q.image.trim() !== "") {
         $('#headline-image').src = q.image;
         $('#headline-image').alt = q.text;
@@ -783,7 +897,7 @@
         $('#headline-image-wrap').classList.add('hidden');
       }
 
-      // Enable buttons
+      // unlock choices
       $$('.option-btn').forEach(b => b.disabled = false);
     }
 
@@ -792,7 +906,6 @@
       box.className = 'box ' + (correct ? 'correct' : 'incorrect');
       const status = correct ? '✅ Correct' : '❌ Correct bias';
 
-      // optional per-article image
       const imgHTML = (item.image && item.image.trim() !== "")
         ? `<div class="box-img-wrap"><img src="${esc(item.image)}" alt="${esc(item.text)}"></div>`
         : '';
@@ -811,15 +924,16 @@
     function handleBias(choice){
       const q = CONFIG.biasRound[bbIndex];
 
-      // Lock buttons
+      // lock buttons
       $$('.option-btn').forEach(b => b.disabled = true);
 
-      // Score
+      // grade
       const correct = (choice === q.answer);
       if(correct) bbScore++;
 
       appendHistory(correct, q);
 
+      // update progress
       bbAnswered++;
       $('#progress').textContent = `${bbAnswered} / ${TOTAL}`;
       $('#progress-bar').style.width = `${(bbAnswered/TOTAL)*100}%`;
@@ -829,7 +943,6 @@
         if (bbIndex < TOTAL){
           showBBQuestion();
         } else {
-          // straight to timeline
           initTimeline();
           showOnly('timeline');
         }
@@ -841,10 +954,10 @@
     });
 
     /* =========================
-       TIMELINE LOGIC
+       TIMELINE
        ========================= */
     let lives = CONFIG.timelineLives;
-    let startLayout = []; // remember layout for Reset
+    let startLayout = [];
 
     function hearts(n){
       return '❤️'.repeat(Math.max(0,n));
@@ -931,7 +1044,6 @@
           e.dataTransfer.effectAllowed = 'move';
           e.dataTransfer.setData('text/plain', el.dataset.id);
 
-          // clear visual marks at new drag start
           $$('#event-list .event').forEach(n => n.classList.remove('correct','incorrect'));
         });
 
@@ -978,7 +1090,7 @@
       return after ? best.el.nextSibling : best.el;
     }
 
-    // Check order button
+    // Timeline check
     $('#check-order').addEventListener('click', () => {
       const win = scoreTimeline({reveal:false});
       if(win){
@@ -1010,7 +1122,6 @@
     }
 
     $('#reveal').addEventListener('click', () => revealOrder(false));
-
     $('#to-final-after-reveal').addEventListener('click', () => goFinal());
 
     $('#reshuffle').addEventListener('click', () => {
@@ -1028,7 +1139,7 @@
     });
 
     /* =========================
-       FINAL SCORE + SOURCES
+       FINAL RESULTS
        ========================= */
     function goFinal(){
       const livesLeft = Math.max(0, lives);
@@ -1048,7 +1159,7 @@
       }
       $('#final-line').textContent = msg;
 
-      // Build "Sources & Links" content
+      // Fill Sources modal content
       const fs = $('#final-sources');
       fs.innerHTML = '';
       CONFIG.biasRound.forEach((item, i) => {
@@ -1067,7 +1178,7 @@
       $('#fab-sources').classList.remove('hidden');
     }
 
-    // floating Sources button / modal wiring
+    // Floating Sources button / modal
     const fab = $('#fab-sources');
     const modal = $('#sources-modal');
     const closeBtn = $('#sources-close');
