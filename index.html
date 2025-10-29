@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NextElect — Issue of the Week (Draft 8)</title>
+  <title>NextElect — Issue of the Week (Draft 9)</title>
   <style>
     /* ===== Theme / Base ===== */
     *{margin:0;padding:0;box-sizing:border-box}
@@ -31,7 +31,7 @@
       min-height:100vh;
       display:flex;
       flex-direction:column;
-      overflow:hidden; /* lock page height so there's no scrolling */
+      overflow:hidden; /* default: no scroll desktop */
     }
     .hidden{display:none!important}
 
@@ -41,12 +41,12 @@
       align-items:center;
       justify-content:center;
       padding:12px;
-      /* we don't want the inner content to force scroll either */
       overflow:hidden;
     }
+
     .screen{
       width:100%;
-      max-width:920px;
+      max-width:1020px; /* made a bit wider to give left/right room */
       margin:0 auto;
       max-height:100%;
       display:flex;
@@ -62,11 +62,12 @@
       gap:.8rem;
       margin:0 0 12px;
       flex-shrink:0;
+      text-align:center;
     }
     .brand img{height:64px}
-    .brand .logo{font-size:2.2rem; text-align:center;}
+    .brand .logo{font-size:2.2rem;}
 
-    /* Card shell (default vertical stack) */
+    /* Base card */
     .card{
       background:var(--card);
       border:1px solid var(--card-border);
@@ -78,15 +79,15 @@
       align-items:center;
       text-align:center;
       flex-shrink:0;
-      max-height:calc(100vh - 150px); /* stay on screen with header */
-      overflow:hidden;
+      max-height:calc(100vh - 150px);
+      overflow:auto; /* allow per-card scroll if needed */
     }
     .section{margin-top:12px}
 
     h1,h2,h3{line-height:1.2}
     .muted{color:var(--muted)}
-    .center-text{text-align:center}
     .left-text{text-align:left}
+    .center-text{text-align:center}
 
     /* Buttons */
     button{font-family:inherit}
@@ -116,7 +117,7 @@
       margin-top:.8rem;
     }
 
-    /* Floating Sources button (final page only) */
+    /* Floating Sources button (Final only) */
     .side-fab{
       position:fixed;
       right:18px;
@@ -137,7 +138,7 @@
     }
     .side-fab:hover{background:#3b3e46}
 
-    /* Modal for sources/links */
+    /* Modal */
     .modal{
       position:fixed;
       inset:0;
@@ -170,7 +171,6 @@
       cursor:pointer;
     }
     .modal-card .close-x:hover{background:#3b3e46}
-
     .links-list a,
     .src-row a{
       color:var(--link-modal);
@@ -183,21 +183,117 @@
       color:#cfd6df;
     }
 
-    /* ===== IMAGE BLOCKS ===== */
-    /* smaller image for summary right-side */
-    .summary-media-col{
+    /* ===== HOME ===== */
+    .home-title{
+      font-size:1.35rem;
+      margin:8px 0 6px;
+    }
+    ol.instructions{
+      margin:.6rem auto 0;
+      max-width:680px;
+      text-align:left;
+      color:#e9eef7;
+      line-height:1.45;
+      padding-left:1.1rem;
+      font-size:1rem; /* keep same text size */
+    }
+    ol.instructions li{
+      margin:.3rem 0;
+    }
+
+    /* ===== SUMMARY LAYOUT (Part 1) ===== */
+    /* We want same font sizes as before. We just align text left and put it next to image. */
+    #summary.card{
+      flex-direction:row;
+      align-items:flex-start;
+      justify-content:space-between;
+      text-align:left;
+      padding:1rem 1.25rem;
+      gap:1rem;
+      max-height:calc(100vh - 150px);
+      overflow:hidden;
+    }
+
+    /* Left column: text content (full size text as before) */
+    .summary-left{
+      flex:1;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:flex-start;
+      max-height:100%;
+      overflow:auto;
+    }
+
+    .summary-header-row{
+      display:flex;
+      align-items:center;
+      gap:.5rem;
       flex-shrink:0;
-      width:220px;
-      max-width:220px;
+      margin-bottom:.5rem;
+    }
+    .summary-header-row img{
+      height:32px;
+    }
+    .summary-header-row h2{
+      font-size:1.2rem;          /* same size vibe you had before Title "Part 1 · Summary" */
+      line-height:1.2;
+      margin:0;
+      color:#fff;
+      font-weight:600;
+    }
+
+    .summary-title{
+      font-size:1.2rem;          /* keep headline size the same */
+      color:#e9eef7;
+      margin:0 0 .5rem 0;
+      font-weight:600;
+      max-width:100%;
+      line-height:1.3;
+    }
+
+    .summary-bullets{
+      line-height:1.5;
+      font-size:1rem;            /* keep bullet size same as before */
+      color:#f2f2f2;
+      max-width:100%;
+      overflow:hidden;
+    }
+    .summary-bullets li{
+      margin:.4rem 0;
+    }
+
+    .summary-cta{
+      margin-top:.8rem;
+      flex-shrink:0;
+    }
+
+    /* Divider between text and image */
+    .summary-divider{
+      width:1px;
+      background:#4a4f58;
+      align-self:stretch;
+      flex-shrink:0;
+    }
+
+    /* Right column: image + credit */
+    .summary-right{
+      flex-shrink:0;
+      width:260px;      /* make room for image with same visual size as earlier 360 max-width version, but side-by-side */
+      max-width:260px;
       display:flex;
       flex-direction:column;
       align-items:center;
       text-align:left;
       gap:.6rem;
+      max-height:100%;
+      overflow:hidden;
     }
 
     .top-image-wrap{
       width:100%;
+      max-width:260px;  /* same visual width as column */
       border-radius:10px;
       overflow:hidden;
       border:1px solid #4a4f58;
@@ -206,7 +302,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      max-height:140px;
+      max-height:170px; /* keep it visually close to original size */
       flex-shrink:0;
     }
     .top-image-wrap img{
@@ -216,9 +312,10 @@
       object-fit:cover;
     }
 
-    /* compact credit box under summary image */
+    /* We only change the credit box style, not the main text size */
     details.image-credit{
       width:100%;
+      max-width:260px;
       background:#2f323a;
       border:1px solid #4a4f58;
       border-radius:8px;
@@ -230,6 +327,7 @@
       box-shadow:0 6px 16px rgba(0,0,0,.35);
       max-height:120px;
       overflow:auto;
+      flex-shrink:0;
     }
     details.image-credit summary{
       cursor:pointer;
@@ -245,85 +343,16 @@
       word-break:break-all;
       font-size:.7rem;
     }
-
-    /* ===== HOME ===== */
-    .home-title{
-      font-size:1.35rem;
-      margin:8px 0 6px;
-    }
-    ol.instructions{
-      margin:.6rem auto 0;
-      max-width:680px;
-      text-align:left;
-      color:#e9eef7;
-      line-height:1.45;
-      padding-left:1.1rem;
-    }
-    ol.instructions li{
-      margin:.3rem 0;
-    }
-
-    /* ===== SUMMARY LAYOUT ===== */
-    /* summary card is now horizontal: left text / right image */
-    #summary.card{
-      flex-direction:row;
-      align-items:flex-start;
-      justify-content:space-between;
-      text-align:left;
-      padding:1rem 1rem;
-      gap:1rem;
-    }
-    .summary-text-col{
-      flex:1;
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-      align-items:flex-start;
-      max-height:100%;
-      overflow:hidden;
-    }
-
-    .summary-topline{
-      display:flex;
-      align-items:center;
-      gap:.5rem;
-      flex-shrink:0;
-      margin-bottom:.5rem;
-    }
-    .summary-topline h2{
-      font-size:1.05rem;
-      line-height:1.2;
-      margin:0;
-      color:#fff;
-    }
-    .summary-topline img{
-      height:32px;
-    }
-
-    .summary-title{
-      font-size:1rem;
-      color:#e9eef7;
-      margin:0 0 .5rem 0;
-      font-weight:600;
-      max-width:100%;
-      text-align:left;
-    }
-
-    .summary-list{
+    .credit-desc{
+      margin-bottom:.4rem;
+      font-size:.75rem;
       line-height:1.4;
-      font-size:.9rem;
-      color:#f2f2f2;
-      max-width:100%;
-      overflow:hidden;
+      color:#d5d5d5;
     }
-    .summary-list li{
-      margin:.4rem 0;
-    }
-
-    .start-btn-row{
-      margin-top:.8rem;
-      flex-shrink:0;
+    .credit-url{
+      font-size:.7rem;
+      color:#d5d5d5;
+      line-height:1.4;
     }
 
     /* ===== BIAS BUSTER ===== */
@@ -393,16 +422,18 @@
       padding:.6rem .7rem .7rem .7rem;
       color:#202020;
       text-align:left;
+      font-size:1rem; /* keep answer text readable */
+      line-height:1.4;
     }
     .box.correct{
       border-color:#28a745;
       background:var(--green-bg);
-      color:var(--green-fg);
+      color:#155724;
     }
     .box.incorrect{
       border-color:#dc3545;
       background:var(--red-bg);
-      color:var(--red-fg);
+      color:#721c24;
     }
 
     .box-img-wrap{
@@ -429,24 +460,7 @@
       text-decoration:underline;
     }
 
-    #headline{
-      background:var(--tile);
-      color:#111;
-      padding:1.1rem 1rem;
-      border-radius:14px;
-      border:1px solid var(--tile-border);
-      box-shadow:0 2px 0 #cfcfcf;
-      margin:.2rem 0 1rem;
-      min-height:3.8rem;
-      font-size:1.2rem;
-      line-height:1.35;
-      text-align:center;
-      width:100%;
-      max-width:760px;
-      flex-shrink:0;
-    }
-
-    /* headline image above headline in bias */
+    /* current headline image */
     #headline-image-wrap{
       width:220px;
       max-width:220px;
@@ -469,6 +483,23 @@
       display:block;
     }
 
+    #headline{
+      background:var(--tile);
+      color:#111;
+      padding:1.1rem 1rem;
+      border-radius:14px;
+      border:1px solid var(--tile-border);
+      box-shadow:0 2px 0 #cfcfcf;
+      margin:.2rem 0 1rem;
+      min-height:3.8rem;
+      font-size:1.2rem;
+      line-height:1.35;
+      text-align:center;
+      width:100%;
+      max-width:760px;
+      flex-shrink:0;
+    }
+
     .options{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -489,6 +520,7 @@
       box-shadow:0 2px 0 #cfcfcf;
       font-weight:600;
       text-align:center;
+      font-size:1rem;
     }
     .option-btn:hover{
       background:#ededed;
@@ -509,6 +541,7 @@
     .lives{
       color:#ffb3b3;
       font-weight:600;
+      font-size:1rem;
     }
     .event-list{
       display:flex;
@@ -539,7 +572,7 @@
       white-space:normal;
       word-break:break-word;
       transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
-      font-size:.9rem;
+      font-size:1rem;
     }
     .event:hover{transform:translateY(-2px)}
     .event.dragging{opacity:.8}
@@ -568,11 +601,10 @@
       text-align:center;
       width:100%;
       max-width:760px;
-      font-size:.9rem;
+      font-size:1rem;
       flex-shrink:0;
     }
 
-    /* Final results */
     .final-big{
       font-size:1.3rem;
       margin-bottom:.25rem;
@@ -582,25 +614,32 @@
       color:#e9eef7;
       margin:.25rem 0 .6rem;
       text-align:center;
+      font-size:1rem;
+      line-height:1.4;
     }
 
-    /* Prevent wrap panic on tiny screens, but still try to avoid scroll:
-       On really narrow screens, stack summary again.
-    */
-    @media(max-width:600px){
+    /* Mobile fallback: allow vertical stacking + scrolling */
+    @media(max-width:700px){
+      body{overflow:auto;}
+      .card{max-height:none;overflow:auto;}
       #summary.card{
         flex-direction:column;
         align-items:flex-start;
         justify-content:flex-start;
+        overflow:auto;
         max-height:none;
-        overflow:auto;
       }
-      .summary-media-col{
+      .summary-divider{display:none;}
+      .summary-right{
         width:100%;
-        max-width:220px;
+        max-width:360px;
       }
-      body{
-        overflow:auto;
+      .top-image-wrap{
+        max-width:360px;
+        max-height:none;
+      }
+      details.image-credit{
+        max-width:360px;
       }
     }
   </style>
@@ -616,7 +655,7 @@
       </div>
 
       <!-- ===== HOME ===== -->
-      <section id="home" class="card">
+      <section id="home" class="card center-text">
         <h2 class="home-title">Welcome to NextElect</h2>
         <p class="muted">Your weekly, unbiased practice on news reading.</p>
         <ol class="instructions">
@@ -629,34 +668,37 @@
 
       <!-- ===== PART 1: SUMMARY ===== -->
       <section id="summary" class="card section hidden">
-        <!-- LEFT COLUMN: text -->
-        <div class="summary-text-col">
-          <div class="summary-topline">
+        <!-- LEFT column text (same font sizes as before) -->
+        <div class="summary-left">
+          <div class="summary-header-row">
             <img src="nextelect-logo.png" alt="NextElect Logo"/>
             <h2>Part 1 · Summary</h2>
           </div>
 
           <div id="issue-title" class="summary-title"></div>
 
-          <ul id="issue-summary" class="summary-list"></ul>
+          <ul id="issue-summary" class="summary-bullets"></ul>
 
-          <div class="start-btn-row">
+          <div class="summary-cta">
             <button id="to-bias" class="btn">Start Playing</button>
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: image + credit -->
-        <div class="summary-media-col">
+        <!-- vertical divider -->
+        <div class="summary-divider"></div>
+
+        <!-- RIGHT column (image same visual size, credit box style is smaller/compact) -->
+        <div class="summary-right">
           <div class="top-image-wrap" id="issue-image-wrap">
             <img id="issue-image" src="" alt="Issue image preview"/>
           </div>
 
           <details id="issue-image-credit" class="image-credit hidden">
             <summary>Image credit / source</summary>
-            <div style="margin-top:.4rem">
-              <div style="color:#d5d5d5;line-height:1.4">
-                <div id="issue-image-credit-desc" style="margin-bottom:.4rem;font-size:.75rem;"></div>
-                <div style="font-size:.7rem;">URL: <code id="issue-image-credit-url"></code></div>
+            <div>
+              <div id="issue-image-credit-desc" class="credit-desc"></div>
+              <div class="credit-url">
+                URL: <code id="issue-image-credit-url"></code>
               </div>
             </div>
           </details>
@@ -664,8 +706,8 @@
       </section>
 
       <!-- ===== PART 2: BIAS BUSTER ===== -->
-      <section id="bias" class="card section hidden" style="overflow:auto;">
-        <!-- Bias round image for current question -->
+      <section id="bias" class="card section hidden">
+        <!-- Headline image (small block above headline) -->
         <div id="headline-image-wrap" class="hidden">
           <img id="headline-image" src="" alt="Headline image preview"/>
         </div>
@@ -682,7 +724,7 @@
         <!-- Answer history -->
         <div id="answer-history"></div>
 
-        <!-- Headline text -->
+        <!-- Current headline text -->
         <div id="headline"></div>
 
         <!-- Choices -->
@@ -694,7 +736,7 @@
       </section>
 
       <!-- ===== PART 3: TIMELINE ===== -->
-      <section id="timeline" class="card section hidden" style="overflow:auto;">
+      <section id="timeline" class="card section hidden">
         <div class="tl-head">
           <h2>Part 3 · Timeline (earliest → latest)</h2>
           <div class="lives" id="lives"></div>
@@ -751,11 +793,9 @@
     const CONFIG = {
       dateLabel: "10/16/2025",
 
-      // Summary image info (shown on the right of Part 1)
+      // Summary image info
       issueImage: "https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
       issueImageCreditDesc: "Associated Press / White House construction photo (Oct 2025).",
-      // We'll also show the direct URL in the dropdown
-      // (we always show it, so no need to toggle separately)
 
       issue: {
         title: "White House Ballroom Construction Fight",
@@ -766,7 +806,7 @@
         ]
       },
 
-      // Bias Buster headlines
+      // Bias Buster headlines (3)
       biasRound: [
         {
           text: "Trump’s White House Ballroom Sparks Questions About Funding and Ethics",
@@ -791,7 +831,7 @@
         }
       ],
 
-      // Timeline order (correct order is ascending by id)
+      // Timeline events in correct order by id
       timelineEvents: [
         { id: 1, text: "The White House Announces Ballroom Construction" },
         { id: 2, text: "Demolition and Construction begin on the ballroom" },
@@ -804,7 +844,7 @@
     };
 
     /* =========================
-       DOM helpers
+       Helpers
        ========================= */
     const $ = (sel) => document.querySelector(sel);
     const $$ = (sel) => Array.from(document.querySelectorAll(sel));
@@ -816,17 +856,17 @@
     function showOnly(id){
       ['home','summary','bias','timeline','final'].forEach(x => $('#'+x).classList.add('hidden'));
       $('#'+id).classList.remove('hidden');
-      window.scrollTo({top:0, behavior:'instant'});
+      window.scrollTo({top:0,left:0,behavior:'instant'});
     }
 
     /* =========================
        HOME → SUMMARY
        ========================= */
     $('#start-btn').addEventListener('click', () => {
-      // Fill summary title/date
+      // Title text
       $('#issue-title').textContent = `${CONFIG.dateLabel} · ${CONFIG.issue.title}`;
 
-      // Fill bullet list
+      // Bullets
       const list = $('#issue-summary');
       list.innerHTML = '';
       CONFIG.issue.summaryBullets.forEach(b => {
@@ -835,7 +875,7 @@
         list.appendChild(li);
       });
 
-      // Summary image + credit on the right
+      // Image / credit
       if (CONFIG.issueImage && CONFIG.issueImage.trim() !== "") {
         $('#issue-image').src = CONFIG.issueImage;
         $('#issue-image').alt = CONFIG.issue.title || "Issue image";
@@ -885,10 +925,8 @@
     function showBBQuestion(){
       const q = CONFIG.biasRound[bbIndex];
 
-      // headline text
       $('#headline').textContent = q.text;
 
-      // per-question image (small)
       if (q.image && q.image.trim() !== "") {
         $('#headline-image').src = q.image;
         $('#headline-image').alt = q.text;
@@ -897,7 +935,6 @@
         $('#headline-image-wrap').classList.add('hidden');
       }
 
-      // unlock choices
       $$('.option-btn').forEach(b => b.disabled = false);
     }
 
@@ -924,16 +961,13 @@
     function handleBias(choice){
       const q = CONFIG.biasRound[bbIndex];
 
-      // lock buttons
       $$('.option-btn').forEach(b => b.disabled = true);
 
-      // grade
       const correct = (choice === q.answer);
       if(correct) bbScore++;
 
       appendHistory(correct, q);
 
-      // update progress
       bbAnswered++;
       $('#progress').textContent = `${bbAnswered} / ${TOTAL}`;
       $('#progress-bar').style.width = `${(bbAnswered/TOTAL)*100}%`;
@@ -1090,7 +1124,7 @@
       return after ? best.el.nextSibling : best.el;
     }
 
-    // Timeline check
+    // Check order button
     $('#check-order').addEventListener('click', () => {
       const win = scoreTimeline({reveal:false});
       if(win){
@@ -1139,7 +1173,7 @@
     });
 
     /* =========================
-       FINAL RESULTS
+       FINAL
        ========================= */
     function goFinal(){
       const livesLeft = Math.max(0, lives);
@@ -1159,7 +1193,7 @@
       }
       $('#final-line').textContent = msg;
 
-      // Fill Sources modal content
+      // Fill modal sources
       const fs = $('#final-sources');
       fs.innerHTML = '';
       CONFIG.biasRound.forEach((item, i) => {
