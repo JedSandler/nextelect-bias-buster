@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NextElect — Issue of the Week (Draft 5)</title>
+  <title>NextElect — Issue of the Week (Draft 6)</title>
   <style>
     /* ===== Theme ===== */
     *{margin:0;padding:0;box-sizing:border-box}
@@ -70,7 +70,7 @@
     .src-row{margin:.35rem 0}
     .src-row small{color:#cfd6df}
 
-    /* Cards / text */
+    /* Cards / layout text */
     .card{
       background:var(--card);border:1px solid var(--card-border);border-radius:14px;
       padding:1rem 1rem;box-shadow:0 12px 30px rgba(0,0,0,.25);
@@ -87,12 +87,12 @@
     /* Image blocks */
     .top-image-wrap{
       width:100%;
-      max-width:360px;
+      max-width:480px;
       border-radius:10px;
       overflow:hidden;
       border:1px solid #4a4f58;
       box-shadow:0 8px 20px rgba(0,0,0,.4);
-      margin:0 auto 1rem auto; /* important: push rest of card content down */
+      margin:0 auto 1rem auto;
       background:#1f2024;
       display:flex;
       align-items:center;
@@ -105,7 +105,36 @@
       object-fit:cover;
     }
 
-    /* ===== Home (Part 0) ===== */
+    /* Collapsible credit */
+    details.image-credit{
+      width:100%;
+      max-width:480px;
+      margin:0 auto 1rem auto;
+      background:#2f323a;
+      border:1px solid #4a4f58;
+      border-radius:8px;
+      padding:.6rem .8rem;
+      color:var(--muted);
+      text-align:left;
+      font-size:.9rem;
+      line-height:1.4;
+      box-shadow:0 6px 16px rgba(0,0,0,.35);
+    }
+    details.image-credit summary{
+      cursor:pointer;
+      color:#e9eef7;
+      font-weight:600;
+      outline:none;
+      list-style:none;
+    }
+    details.image-credit summary::-webkit-details-marker{display:none}
+    details.image-credit code{
+      color:#cfe2ff;
+      word-break:break-all;
+      font-size:.8rem;
+    }
+
+    /* ===== Home ===== */
     .home-title{font-size:1.35rem;margin:8px 0 6px}
     ol.instructions{margin:.6rem auto 0;max-width:680px;text-align:left;color:#e9eef7;line-height:1.45;padding-left:1.1rem}
     ol.instructions li{margin:.3rem 0}
@@ -116,11 +145,17 @@
     .summary-list li{margin:.25rem 0}
 
     /* ===== Part 2: Bias Buster ===== */
-    .progress-top{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.5rem;width:100%;max-width:760px}
+    .progress-top{
+      display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.5rem;
+      width:100%;max-width:760px;text-align:left
+    }
     .topic-label{font-size:1rem;color:var(--muted);text-align:left}
     .progress-bar-wrap{flex:1;height:8px;background:#3a3d46;border-radius:5px;overflow:hidden}
     #progress-bar{height:100%;width:0%;background:var(--accent);transition:width .25s ease}
-    .meta-row{display:flex;align-items:center;justify-content:flex-end;margin:.4rem 0 .7rem;color:var(--muted);width:100%;max-width:760px}
+    .meta-row{
+      display:flex;align-items:center;justify-content:flex-end;margin:.4rem 0 .7rem;color:var(--muted);
+      width:100%;max-width:760px
+    }
     #progress{font-weight:600}
 
     #answer-history{
@@ -130,6 +165,7 @@
       margin-bottom:.8rem;
       width:100%;
       max-width:760px;
+      text-align:left;
     }
 
     .box{
@@ -169,13 +205,16 @@
       opacity:.85;
       line-height:1.4;
     }
+    .box .src a{
+      color:var(--link-bias);
+      text-decoration:underline;
+    }
 
     #headline{
       background:var(--tile);color:#111;padding:1.1rem 1rem;border-radius:14px;border:1px solid var(--tile-border);
       box-shadow:0 2px 0 #cfcfcf;margin:.2rem 0 1rem;min-height:3.8rem;font-size:1.2rem;line-height:1.35;
       text-align:center;
-      width:100%;
-      max-width:760px;
+      width:100%;max-width:760px;
     }
 
     .options{
@@ -201,7 +240,10 @@
       width:100%;max-width:760px;text-align:left;
     }
     .lives{color:#ffb3b3;font-weight:600}
-    .event-list{display:flex;flex-direction:column;gap:.6rem;list-style:none;margin:.8rem 0 0;width:100%;max-width:760px;text-align:left}
+    .event-list{
+      display:flex;flex-direction:column;gap:.6rem;list-style:none;margin:.8rem 0 0;
+      width:100%;max-width:760px;text-align:left
+    }
     .event{
       background:#34363d;border:1px solid #4a4f58;border-radius:12px;width:100%;min-height:86px;cursor:grab;user-select:none;
       display:flex;align-items:flex-start;justify-content:flex-start;padding:.85rem .9rem;text-align:left;
@@ -231,7 +273,7 @@
   <div class="center">
     <main class="screen" aria-live="polite">
 
-      <!-- ===== GLOBAL BRANDING AT TOP ===== -->
+      <!-- ===== GLOBAL BRANDING ===== -->
       <div class="brand">
         <img src="nextelect-logo.png" alt="NextElect Logo"/>
         <h1 class="logo">NextElect — Issue of the Week</h1>
@@ -239,11 +281,7 @@
 
       <!-- ===== HOME ===== -->
       <section id="home" class="card center-text">
-        <!-- Issue image (CONFIG.issueImage) -->
-        <div class="top-image-wrap" id="issue-image-wrap">
-          <img id="issue-image" src="" alt="Issue image preview"/>
-        </div>
-
+        <!-- Removed image from HOME per request -->
         <h2 class="home-title">Welcome to NextElect</h2>
         <p class="muted">Your weekly, unbiased practice on news reading.</p>
         <ol class="instructions">
@@ -256,6 +294,22 @@
 
       <!-- ===== PART 1: SUMMARY ===== -->
       <section id="summary" class="card section hidden">
+        <!-- Issue image now lives HERE -->
+        <div class="top-image-wrap" id="issue-image-wrap">
+          <img id="issue-image" src="" alt="Issue image preview"/>
+        </div>
+
+        <!-- Collapsible credit for that image -->
+        <details id="issue-image-credit" class="image-credit hidden">
+          <summary>Image credit / source</summary>
+          <div style="margin-top:.4rem">
+            <div style="color:#d5d5d5;font-size:.8rem;line-height:1.4">
+              <div>This image relates to this week's issue.</div>
+              <div>URL: <code id="issue-image-credit-url"></code></div>
+            </div>
+          </div>
+        </details>
+
         <h2>Part 1 · Summary</h2>
         <div style="margin:.3rem 0 .6rem">
           <img src="nextelect-logo.png" alt="NextElect Logo" style="height:44px;vertical-align:middle"/>
@@ -267,7 +321,7 @@
 
       <!-- ===== PART 2: BIAS BUSTER ===== -->
       <section id="bias" class="card section hidden">
-        <!-- current headline image -->
+        <!-- current headline image (for the headline being answered) -->
         <div class="top-image-wrap hidden" id="headline-image-wrap">
           <img id="headline-image" src="" alt="Headline image preview"/>
         </div>
@@ -291,7 +345,7 @@
         </div>
       </section>
 
-      <!-- ===== PART 3: TIMELINE (vertical, all visible) ===== -->
+      <!-- ===== PART 3: TIMELINE ===== -->
       <section id="timeline" class="card section hidden">
         <div class="tl-head">
           <h2>Part 3 · Timeline (earliest → latest)</h2>
@@ -348,19 +402,21 @@
     const CONFIG = {
       dateLabel: "10/16/2025",
 
-      // Hero image for the Issue (shows on intro/home only)
+      // Image for the issue summary page
       issueImage: "https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
+      // What to show in the dropdown under the summary image
+      issueImageCredit: "Associated Press / White House construction photo (Oct 2025). URL: https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
 
       issue: {
-        title: "Sample: Agencies & Executive Power / White House Ballroom",
+        title: "White House Ballroom Construction Fight",
         summaryBullets: [
-          "The White House said on Tuesday it will submit plans for President Donald Trump's $250 million White House ballroom project to a body that oversees federal building construction, even though demolition work began earlier this week.",
-          "Trump reveled on Tuesday in the demolition sounds by construction workers for the ballroom addition to the White House, the first major change to the historic property in decades.",
-          "The Treasury Department instructed employees not to share photos of the demolition of parts of the White House’s East Wing after images of construction equipment dismantling the facade of the building went viral online."
+          "The White House said it will submit plans for President Donald Trump's $250 million White House ballroom project to a federal oversight body, even though demolition work already began.",
+          "Trump praised the construction noise for the new ballroom, which would be a major physical change to the historic building.",
+          "The Treasury Department told employees not to share photos of demolition work in the East Wing after images spread online."
         ]
       },
 
-      // Bias Buster (3 headlines). Each can now have its own image.
+      // Bias Buster (3 headlines). Each can have its own image.
       biasRound: [
         {
           text: "Trump’s White House Ballroom Sparks Questions About Funding and Ethics",
@@ -385,7 +441,7 @@
         }
       ],
 
-      // Timeline: correct order is ascending by id (1..5)
+      // Timeline: correct chronological order is ascending by id (1..5)
       timelineEvents: [
         { id: 1, text: "The White House Announces Ballroom Construction" },
         { id: 2, text: "Demolition and Construction begin on the ballroom" },
@@ -414,15 +470,33 @@
     /* =========================
        HOME → SUMMARY
        ========================= */
-    $('#issue-image').src = CONFIG.issueImage || "";
-    $('#issue-image').alt = CONFIG.issue.title || "Issue image";
-
     $('#start-btn').addEventListener('click', () => {
+      // Fill summary header text
       $('#issue-title').textContent = `${CONFIG.dateLabel} · ${CONFIG.issue.title}`;
+
+      // Fill summary bullets
       const list = $('#issue-summary'); list.innerHTML = '';
       CONFIG.issue.summaryBullets.forEach(b => {
         const li = document.createElement('li'); li.textContent = b; list.appendChild(li);
       });
+
+      // Fill summary image + credit
+      if (CONFIG.issueImage && CONFIG.issueImage.trim() !== "") {
+        $('#issue-image').src = CONFIG.issueImage;
+        $('#issue-image').alt = CONFIG.issue.title || "Issue image";
+        $('#issue-image-wrap').classList.remove('hidden');
+
+        if (CONFIG.issueImageCredit && CONFIG.issueImageCredit.trim() !== "") {
+          $('#issue-image-credit-url').textContent = CONFIG.issueImage;
+          $('#issue-image-credit').classList.remove('hidden');
+        } else {
+          $('#issue-image-credit').classList.add('hidden');
+        }
+      } else {
+        $('#issue-image-wrap').classList.add('hidden');
+        $('#issue-image-credit').classList.add('hidden');
+      }
+
       showOnly('summary');
     });
 
@@ -445,18 +519,17 @@
       $('#progress').textContent = `0 / ${TOTAL}`;
       $('#answer-history').innerHTML = '';
 
-      // prime first headline + its image
       showBBQuestion();
     }
 
     function showBBQuestion(){
       const q = CONFIG.biasRound[bbIndex];
 
-      // set headline text
+      // Headline text
       $('#headline').textContent = q.text;
 
-      // set current headline image (or hide block if no image)
-      if (q.image){
+      // Headline image (question view)
+      if (q.image && q.image.trim() !== "") {
         $('#headline-image').src = q.image;
         $('#headline-image').alt = q.text;
         $('#headline-image-wrap').classList.remove('hidden');
@@ -464,7 +537,7 @@
         $('#headline-image-wrap').classList.add('hidden');
       }
 
-      // re-enable buttons
+      // Enable buttons
       $$('.option-btn').forEach(b => b.disabled = false);
     }
 
@@ -473,12 +546,12 @@
       const box = document.createElement('div');
       box.className = 'box ' + (correct ? 'correct' : 'incorrect');
 
-      // Compose optional image HTML
-      const imgHTML = item.image
+      const status = correct ? '✅ Correct' : '❌ Correct bias';
+
+      // optional image
+      const imgHTML = (item.image && item.image.trim() !== "")
         ? `<div class="box-img-wrap"><img src="${esc(item.image)}" alt="${esc(item.text)}"></div>`
         : '';
-
-      const status = correct ? '✅ Correct' : '❌ Correct bias';
 
       box.innerHTML = `
         ${imgHTML}
@@ -507,7 +580,6 @@
         if(bbIndex < TOTAL){
           showBBQuestion();
         } else {
-          // Auto-advance to timeline after third answer
           initTimeline();
           showOnly('timeline');
         }
@@ -532,7 +604,6 @@
       updateLives();
       buildTimeline(shuffle([...CONFIG.timelineEvents]));
       $('#tl-score').textContent = '';
-      // hide post-reveal final button until revealed
       $('#to-final-after-reveal').classList.add('hidden');
     }
 
@@ -595,7 +666,6 @@
           el.classList.add('dragging');
           e.dataTransfer.effectAllowed = 'move';
           e.dataTransfer.setData('text/plain', el.dataset.id);
-          // clear marks when a new drag starts
           $$('#event-list .event').forEach(n => n.classList.remove('correct','incorrect'));
         });
         el.addEventListener('dragend', () => {
@@ -631,23 +701,20 @@
       return after ? best.el.nextSibling : best.el;
     }
 
-    // Timeline controls — go straight to Final when win; if out of lives, show message then go Final.
+    // Timeline checks
     $('#check-order').addEventListener('click', () => {
       const win = scoreTimeline({reveal:false});
       if(win){ goFinal(); return; }
       lives--; updateLives();
       if(lives <= 0){
-        // Clear signal that they're going to results after failing
         $('#tl-score').textContent = "Out of lives. Showing correct order, then taking you to results…";
         revealOrder(true);
         setTimeout(() => goFinal(), 900);
       } else {
-        // Nudge: they were wrong but still have lives
         $('#tl-score').textContent += " · Try again.";
       }
     });
 
-    // Reveal shows a dedicated "Go to Results" button so users don't have to Check after revealing.
     function revealOrder(fromLoss=false){
       const ordered = [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id);
       buildTimeline(ordered);
@@ -678,13 +745,11 @@
        FINAL (score + sources)
        ========================= */
     function goFinal(){
-      // Final score = Bias Buster correct + Lives left (current lives, not reset)
       const livesLeft = Math.max(0, lives);
       const finalScore = bbScore + livesLeft;
       const biasPart = `${bbScore}/3`;
       const livesPart = `${livesLeft}/3`;
 
-      // Exciting, performance-aware copy
       let msg;
       if(finalScore === 6){
         msg = `🔥 Outstanding! Score ${finalScore}/6 — Perfect balance of bias spotting (${biasPart}) and timeline recall (${livesPart}).`;
@@ -697,7 +762,7 @@
       }
       $('#final-line').textContent = msg;
 
-      // Build per-question sources list reflecting correctness
+      // Build Sources list with correctness
       const fs = $('#final-sources');
       fs.innerHTML = '';
       CONFIG.biasRound.forEach((item, i) => {
@@ -713,7 +778,6 @@
       });
 
       showOnly('final');
-      // Show floating Sources button at the end
       $('#fab-sources').classList.remove('hidden');
     }
 
