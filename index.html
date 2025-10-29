@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NextElect — Issue of the Week (Draft 9)</title>
+  <title>NextElect — Issue of the Week (Draft 10)</title>
   <style>
     /* ===== Theme / Base ===== */
     *{margin:0;padding:0;box-sizing:border-box}
@@ -31,7 +31,7 @@
       min-height:100vh;
       display:flex;
       flex-direction:column;
-      overflow:hidden; /* default: no scroll desktop */
+      overflow:hidden; /* desktop: try to avoid full-page scroll */
     }
     .hidden{display:none!important}
 
@@ -46,7 +46,7 @@
 
     .screen{
       width:100%;
-      max-width:1020px; /* made a bit wider to give left/right room */
+      max-width:1020px;
       margin:0 auto;
       max-height:100%;
       display:flex;
@@ -67,7 +67,7 @@
     .brand img{height:64px}
     .brand .logo{font-size:2.2rem;}
 
-    /* Base card */
+    /* Card shell */
     .card{
       background:var(--card);
       border:1px solid var(--card-border);
@@ -80,7 +80,7 @@
       text-align:center;
       flex-shrink:0;
       max-height:calc(100vh - 150px);
-      overflow:auto; /* allow per-card scroll if needed */
+      overflow:auto; /* per-card scroll if we need it */
     }
     .section{margin-top:12px}
 
@@ -195,14 +195,13 @@
       color:#e9eef7;
       line-height:1.45;
       padding-left:1.1rem;
-      font-size:1rem; /* keep same text size */
+      font-size:1rem;
     }
     ol.instructions li{
       margin:.3rem 0;
     }
 
     /* ===== SUMMARY LAYOUT (Part 1) ===== */
-    /* We want same font sizes as before. We just align text left and put it next to image. */
     #summary.card{
       flex-direction:row;
       align-items:flex-start;
@@ -214,7 +213,7 @@
       overflow:hidden;
     }
 
-    /* Left column: text content (full size text as before) */
+    /* Left column: text (keep same sizes as before) */
     .summary-left{
       flex:1;
       min-width:0;
@@ -237,7 +236,7 @@
       height:32px;
     }
     .summary-header-row h2{
-      font-size:1.2rem;          /* same size vibe you had before Title "Part 1 · Summary" */
+      font-size:1.2rem;
       line-height:1.2;
       margin:0;
       color:#fff;
@@ -245,7 +244,7 @@
     }
 
     .summary-title{
-      font-size:1.2rem;          /* keep headline size the same */
+      font-size:1.2rem;
       color:#e9eef7;
       margin:0 0 .5rem 0;
       font-weight:600;
@@ -255,7 +254,7 @@
 
     .summary-bullets{
       line-height:1.5;
-      font-size:1rem;            /* keep bullet size same as before */
+      font-size:1rem;
       color:#f2f2f2;
       max-width:100%;
       overflow:hidden;
@@ -269,7 +268,7 @@
       flex-shrink:0;
     }
 
-    /* Divider between text and image */
+    /* Divider line between left text and right media */
     .summary-divider{
       width:1px;
       background:#4a4f58;
@@ -277,11 +276,11 @@
       flex-shrink:0;
     }
 
-    /* Right column: image + credit */
+    /* Right column: larger image + compact credit */
     .summary-right{
       flex-shrink:0;
-      width:260px;      /* make room for image with same visual size as earlier 360 max-width version, but side-by-side */
-      max-width:260px;
+      width:360px;        /* larger image box */
+      max-width:360px;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -293,7 +292,7 @@
 
     .top-image-wrap{
       width:100%;
-      max-width:260px;  /* same visual width as column */
+      max-width:360px;    /* match column width */
       border-radius:10px;
       overflow:hidden;
       border:1px solid #4a4f58;
@@ -302,7 +301,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      max-height:170px; /* keep it visually close to original size */
+      max-height:220px;   /* bigger visual footprint than before */
       flex-shrink:0;
     }
     .top-image-wrap img{
@@ -312,10 +311,9 @@
       object-fit:cover;
     }
 
-    /* We only change the credit box style, not the main text size */
     details.image-credit{
       width:100%;
-      max-width:260px;
+      max-width:360px;
       background:#2f323a;
       border:1px solid #4a4f58;
       border-radius:8px;
@@ -338,11 +336,6 @@
       font-size:.8rem;
     }
     details.image-credit summary::-webkit-details-marker{display:none}
-    details.image-credit code{
-      color:#cfe2ff;
-      word-break:break-all;
-      font-size:.7rem;
-    }
     .credit-desc{
       margin-bottom:.4rem;
       font-size:.75rem;
@@ -353,6 +346,11 @@
       font-size:.7rem;
       color:#d5d5d5;
       line-height:1.4;
+      word-break:break-all;
+    }
+    .credit-url code{
+      color:#cfe2ff;
+      font-size:.7rem;
     }
 
     /* ===== BIAS BUSTER ===== */
@@ -422,7 +420,7 @@
       padding:.6rem .7rem .7rem .7rem;
       color:#202020;
       text-align:left;
-      font-size:1rem; /* keep answer text readable */
+      font-size:1rem;
       line-height:1.4;
     }
     .box.correct{
@@ -460,7 +458,7 @@
       text-decoration:underline;
     }
 
-    /* current headline image */
+    /* Headline image on Bias Buster question */
     #headline-image-wrap{
       width:220px;
       max-width:220px;
@@ -618,7 +616,7 @@
       line-height:1.4;
     }
 
-    /* Mobile fallback: allow vertical stacking + scrolling */
+    /* Mobile fallback layout */
     @media(max-width:700px){
       body{overflow:auto;}
       .card{max-height:none;overflow:auto;}
@@ -626,8 +624,8 @@
         flex-direction:column;
         align-items:flex-start;
         justify-content:flex-start;
-        overflow:auto;
         max-height:none;
+        overflow:auto;
       }
       .summary-divider{display:none;}
       .summary-right{
@@ -648,13 +646,13 @@
   <div class="center">
     <main class="screen" aria-live="polite">
 
-      <!-- Global header -->
+      <!-- Brand -->
       <div class="brand">
         <img src="nextelect-logo.png" alt="NextElect Logo"/>
         <h1 class="logo">NextElect — Issue of the Week</h1>
       </div>
 
-      <!-- ===== HOME ===== -->
+      <!-- HOME -->
       <section id="home" class="card center-text">
         <h2 class="home-title">Welcome to NextElect</h2>
         <p class="muted">Your weekly, unbiased practice on news reading.</p>
@@ -666,9 +664,9 @@
         <div class="btn-row"><button id="start-btn" class="btn">Start</button></div>
       </section>
 
-      <!-- ===== PART 1: SUMMARY ===== -->
+      <!-- SUMMARY -->
       <section id="summary" class="card section hidden">
-        <!-- LEFT column text (same font sizes as before) -->
+        <!-- Left column: text -->
         <div class="summary-left">
           <div class="summary-header-row">
             <img src="nextelect-logo.png" alt="NextElect Logo"/>
@@ -684,10 +682,10 @@
           </div>
         </div>
 
-        <!-- vertical divider -->
+        <!-- Divider -->
         <div class="summary-divider"></div>
 
-        <!-- RIGHT column (image same visual size, credit box style is smaller/compact) -->
+        <!-- Right column: larger image centered, compact credit -->
         <div class="summary-right">
           <div class="top-image-wrap" id="issue-image-wrap">
             <img id="issue-image" src="" alt="Issue image preview"/>
@@ -705,9 +703,9 @@
         </div>
       </section>
 
-      <!-- ===== PART 2: BIAS BUSTER ===== -->
+      <!-- BIAS BUSTER -->
       <section id="bias" class="card section hidden">
-        <!-- Headline image (small block above headline) -->
+        <!-- per-headline image -->
         <div id="headline-image-wrap" class="hidden">
           <img id="headline-image" src="" alt="Headline image preview"/>
         </div>
@@ -721,10 +719,10 @@
           <div id="progress">0 / 3</div>
         </div>
 
-        <!-- Answer history -->
+        <!-- Answer recap -->
         <div id="answer-history"></div>
 
-        <!-- Current headline text -->
+        <!-- Headline text -->
         <div id="headline"></div>
 
         <!-- Choices -->
@@ -735,7 +733,7 @@
         </div>
       </section>
 
-      <!-- ===== PART 3: TIMELINE ===== -->
+      <!-- TIMELINE -->
       <section id="timeline" class="card section hidden">
         <div class="tl-head">
           <h2>Part 3 · Timeline (earliest → latest)</h2>
@@ -755,7 +753,7 @@
         <p id="tl-score" class="score"></p>
       </section>
 
-      <!-- ===== FINAL ===== -->
+      <!-- FINAL -->
       <section id="final" class="card section hidden">
         <h2 class="final-big">Final Results</h2>
         <p id="final-line" class="final-sub"></p>
@@ -764,7 +762,7 @@
     </main>
   </div>
 
-  <!-- Floating Sources & Links button (Final only) -->
+  <!-- Floating Sources & Links button -->
   <button id="fab-sources" class="side-fab hidden" aria-label="Sources & Links">🔗</button>
 
   <!-- Sources & Links Modal -->
@@ -793,7 +791,6 @@
     const CONFIG = {
       dateLabel: "10/16/2025",
 
-      // Summary image info
       issueImage: "https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
       issueImageCreditDesc: "Associated Press / White House construction photo (Oct 2025).",
 
@@ -806,7 +803,6 @@
         ]
       },
 
-      // Bias Buster headlines (3)
       biasRound: [
         {
           text: "Trump’s White House Ballroom Sparks Questions About Funding and Ethics",
@@ -831,7 +827,6 @@
         }
       ],
 
-      // Timeline events in correct order by id
       timelineEvents: [
         { id: 1, text: "The White House Announces Ballroom Construction" },
         { id: 2, text: "Demolition and Construction begin on the ballroom" },
@@ -843,9 +838,7 @@
       timelineLives: 3
     };
 
-    /* =========================
-       Helpers
-       ========================= */
+    /* Helpers */
     const $ = (sel) => document.querySelector(sel);
     const $$ = (sel) => Array.from(document.querySelectorAll(sel));
     const esc = (s) => (s||"").replace(/[&<>"']/g, m => (
@@ -859,14 +852,10 @@
       window.scrollTo({top:0,left:0,behavior:'instant'});
     }
 
-    /* =========================
-       HOME → SUMMARY
-       ========================= */
+    /* HOME → SUMMARY */
     $('#start-btn').addEventListener('click', () => {
-      // Title text
       $('#issue-title').textContent = `${CONFIG.dateLabel} · ${CONFIG.issue.title}`;
 
-      // Bullets
       const list = $('#issue-summary');
       list.innerHTML = '';
       CONFIG.issue.summaryBullets.forEach(b => {
@@ -875,7 +864,6 @@
         list.appendChild(li);
       });
 
-      // Image / credit
       if (CONFIG.issueImage && CONFIG.issueImage.trim() !== "") {
         $('#issue-image').src = CONFIG.issueImage;
         $('#issue-image').alt = CONFIG.issue.title || "Issue image";
@@ -892,17 +880,13 @@
       showOnly('summary');
     });
 
-    /* =========================
-       SUMMARY → BIAS
-       ========================= */
+    /* SUMMARY → BIAS */
     $('#to-bias').addEventListener('click', () => {
       initBias();
       showOnly('bias');
     });
 
-    /* =========================
-       BIAS BUSTER
-       ========================= */
+    /* BIAS BUSTER */
     const TOTAL = 3;
     let bbIndex = 0;
     let bbAnswered = 0;
@@ -987,9 +971,7 @@
       btn.addEventListener('click', () => handleBias(btn.dataset.choice));
     });
 
-    /* =========================
-       TIMELINE
-       ========================= */
+    /* TIMELINE */
     let lives = CONFIG.timelineLives;
     let startLayout = [];
 
@@ -1124,7 +1106,7 @@
       return after ? best.el.nextSibling : best.el;
     }
 
-    // Check order button
+    // Check order
     $('#check-order').addEventListener('click', () => {
       const win = scoreTimeline({reveal:false});
       if(win){
@@ -1172,9 +1154,7 @@
       $('#to-final-after-reveal').classList.add('hidden');
     });
 
-    /* =========================
-       FINAL
-       ========================= */
+    /* FINAL */
     function goFinal(){
       const livesLeft = Math.max(0, lives);
       const finalScore = bbScore + livesLeft;
@@ -1193,7 +1173,7 @@
       }
       $('#final-line').textContent = msg;
 
-      // Fill modal sources
+      // Fill modal content
       const fs = $('#final-sources');
       fs.innerHTML = '';
       CONFIG.biasRound.forEach((item, i) => {
