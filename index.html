@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NextElect — Issue of the Week (Draft 10)</title>
+  <title>NextElect — Issue of the Week (Multi-Issue)</title>
   <style>
     /* ===== Theme / Base ===== */
     *{margin:0;padding:0;box-sizing:border-box}
@@ -31,7 +31,7 @@
       min-height:100vh;
       display:flex;
       flex-direction:column;
-      overflow:hidden; /* desktop: try to avoid full-page scroll */
+      overflow:hidden;
     }
     .hidden{display:none!important}
 
@@ -80,7 +80,7 @@
       text-align:center;
       flex-shrink:0;
       max-height:calc(100vh - 150px);
-      overflow:auto; /* per-card scroll if we need it */
+      overflow:auto;
     }
     .section{margin-top:12px}
 
@@ -115,6 +115,50 @@
       flex-wrap:wrap;
       justify-content:center;
       margin-top:.8rem;
+    }
+
+    /* Issue choice buttons on Home */
+    .issue-grid{
+      margin-top:.9rem;
+      display:flex;
+      flex-wrap:wrap;
+      gap:.75rem;
+      justify-content:center;
+      width:100%;
+      max-width:780px;
+    }
+    .issue-card{
+      background:#34363d;
+      border:1px solid #474a53;
+      border-radius:12px;
+      padding:.8rem .95rem;
+      min-width:220px;
+      max-width:260px;
+      text-align:left;
+      cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,.35);
+      transition:background .18s, transform .08s, box-shadow .18s;
+      font-size:.95rem;
+      line-height:1.35;
+    }
+    .issue-card:hover{
+      background:#3b3e46;
+      transform:translateY(-1px);
+      box-shadow:0 6px 16px rgba(0,0,0,.4);
+    }
+    .issue-card-title{
+      font-weight:600;
+      margin-bottom:.15rem;
+      color:#fff;
+    }
+    .issue-card-date{
+      font-size:.8rem;
+      color:#bfc4cf;
+      margin-bottom:.25rem;
+    }
+    .issue-card-desc{
+      font-size:.9rem;
+      color:#e3e6ee;
     }
 
     /* Floating Sources button (Final only) */
@@ -213,7 +257,6 @@
       overflow:hidden;
     }
 
-    /* Left column: text (keep same sizes as before) */
     .summary-left{
       flex:1;
       min-width:0;
@@ -268,7 +311,6 @@
       flex-shrink:0;
     }
 
-    /* Divider line between left text and right media */
     .summary-divider{
       width:1px;
       background:#4a4f58;
@@ -276,10 +318,9 @@
       flex-shrink:0;
     }
 
-    /* Right column: larger image + compact credit */
     .summary-right{
       flex-shrink:0;
-      width:360px;        /* larger image box */
+      width:360px;
       max-width:360px;
       display:flex;
       flex-direction:column;
@@ -292,7 +333,7 @@
 
     .top-image-wrap{
       width:100%;
-      max-width:360px;    /* match column width */
+      max-width:360px;
       border-radius:10px;
       overflow:hidden;
       border:1px solid #4a4f58;
@@ -301,7 +342,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      max-height:220px;   /* bigger visual footprint than before */
+      max-height:220px;
       flex-shrink:0;
     }
     .top-image-wrap img{
@@ -458,7 +499,6 @@
       text-decoration:underline;
     }
 
-    /* Headline image on Bias Buster question */
     #headline-image-wrap{
       width:220px;
       max-width:220px;
@@ -616,7 +656,7 @@
       line-height:1.4;
     }
 
-    /* Mobile fallback layout */
+    /* Mobile fallback */
     @media(max-width:700px){
       body{overflow:auto;}
       .card{max-height:none;overflow:auto;}
@@ -652,7 +692,7 @@
         <h1 class="logo">NextElect — Issue of the Week</h1>
       </div>
 
-      <!-- HOME -->
+      <!-- HOME: choose one of three issues -->
       <section id="home" class="card center-text">
         <h2 class="home-title">Welcome to NextElect</h2>
         <p class="muted">Your weekly, unbiased practice on news reading.</p>
@@ -661,12 +701,29 @@
           <li>Play Bias Buster: identify the framing (Left, Center, Right) for 3 headlines.</li>
           <li>Put 5 key events in correct order. You have 3 lives.</li>
         </ol>
-        <div class="btn-row"><button id="start-btn" class="btn">Start</button></div>
+
+        <p class="muted" style="margin-top:.9rem;">Pick an issue to play:</p>
+        <div class="issue-grid">
+          <button class="issue-card" data-issue="issue1">
+            <div class="issue-card-title">Issue 1: Ballroom Construction</div>
+            <div class="issue-card-date">10/16/2025</div>
+            <div class="issue-card-desc">Trump’s planned White House ballroom and the demolition fight around it.</div>
+          </button>
+          <button class="issue-card" data-issue="issue2">
+            <div class="issue-card-title">Issue 2: Agencies & Executive Power</div>
+            <div class="issue-card-date">10/09/2025</div>
+            <div class="issue-card-desc">Court battles over how much power presidents should have over federal agencies.</div>
+          </button>
+          <button class="issue-card" data-issue="issue3">
+            <div class="issue-card-title">Issue 3: Speech & Leaks</div>
+            <div class="issue-card-date">10/02/2025</div>
+            <div class="issue-card-desc">Internal fights over speech, leaks, and who controls information from inside government.</div>
+          </button>
+        </div>
       </section>
 
       <!-- SUMMARY -->
       <section id="summary" class="card section hidden">
-        <!-- Left column: text -->
         <div class="summary-left">
           <div class="summary-header-row">
             <img src="nextelect-logo.png" alt="NextElect Logo"/>
@@ -682,10 +739,8 @@
           </div>
         </div>
 
-        <!-- Divider -->
         <div class="summary-divider"></div>
 
-        <!-- Right column: larger image centered, compact credit -->
         <div class="summary-right">
           <div class="top-image-wrap" id="issue-image-wrap">
             <img id="issue-image" src="" alt="Issue image preview"/>
@@ -705,7 +760,6 @@
 
       <!-- BIAS BUSTER -->
       <section id="bias" class="card section hidden">
-        <!-- per-headline image -->
         <div id="headline-image-wrap" class="hidden">
           <img id="headline-image" src="" alt="Headline image preview"/>
         </div>
@@ -719,13 +773,10 @@
           <div id="progress">0 / 3</div>
         </div>
 
-        <!-- Answer recap -->
         <div id="answer-history"></div>
 
-        <!-- Headline text -->
         <div id="headline"></div>
 
-        <!-- Choices -->
         <div class="options">
           <button class="option-btn" data-choice="left">Left</button>
           <button class="option-btn" data-choice="center">Center</button>
@@ -771,72 +822,168 @@
       <button id="sources-close" class="close-x" aria-label="Close">×</button>
       <h3>Sources & Links</h3>
       <p class="muted" style="margin:.25rem 0 .5rem">
-        These are the articles used in Bias Buster. Your checkmarks reflect how you answered.
+        These are the articles used in Bias Buster for the issue you just played. The checkmarks show where you matched the bias label.
       </p>
       <div id="final-sources" style="margin:.4rem 0 .6rem"></div>
       <hr style="border:0;border-top:1px solid #4a4f58;margin:.6rem 0">
+      <p class="muted" style="margin-bottom:.35rem;">
+        Want to go deeper on bias and media literacy? These sites are good starting points:
+      </p>
       <div class="links-list">
-        <p><a href="https://redbluedictionary.org" target="_blank" rel="noopener">Red/Blue Dictionary</a></p>
-        <p><a href="https://www.allsides.com" target="_blank" rel="noopener">AllSides</a></p>
-        <p><a href="https://ground.news" target="_blank" rel="noopener">Ground News</a></p>
-        <p><a href="https://mediabiasfactcheck.com" target="_blank" rel="noopener">Media Bias/Fact Check</a></p>
+        <p><a href="https://redbluedictionary.org" target="_blank" rel="noopener">Red/Blue Dictionary — how different groups define the same terms</a></p>
+        <p><a href="https://www.allsides.com" target="_blank" rel="noopener">AllSides — outlet bias ratings and side-by-side coverage</a></p>
+        <p><a href="https://ground.news" target="_blank" rel="noopener">Ground News — compare headlines and framing across outlets</a></p>
+        <p><a href="https://mediabiasfactcheck.com" target="_blank" rel="noopener">Media Bias/Fact Check — bias and factual-reporting scores</a></p>
       </div>
     </div>
   </div>
 
   <script>
     /* =========================
-       CONFIG — YOU EDIT THIS
+       THREE ISSUES CONFIG
        ========================= */
-    const CONFIG = {
-      dateLabel: "10/16/2025",
-
-      issueImage: "https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
-      issueImageCreditDesc: "Associated Press / White House construction photo (Oct 2025).",
-
-      issue: {
-        title: "White House Ballroom Construction Fight",
-        summaryBullets: [
-          "The White House said it will submit plans for President Donald Trump's $250 million White House ballroom project to a federal oversight body, even though demolition work has already begun.",
-          "Trump praised the construction noise for the new ballroom, which would be a major physical change to the historic building.",
-          "The Treasury Department told employees not to share photos of demolition work in the East Wing after images spread online."
-        ]
+    const ISSUES = {
+      issue1: {
+        dateLabel: "10/16/2025",
+        issueImage: "https://d3i6fh83elv35t.cloudfront.net/static/2025/10/AP25296603874064-1024x685.jpg",
+        issueImageCreditDesc: "Associated Press / White House construction photo (Oct 2025).",
+        issue: {
+          title: "White House Ballroom Construction Fight",
+          summaryBullets: [
+            "The White House said it will submit plans for President Donald Trump's $250 million White House ballroom project to a federal oversight body, even though demolition work has already begun.",
+            "Trump praised the construction noise for the new ballroom, which would be a major physical change to the historic building.",
+            "The Treasury Department told employees not to share photos of demolition work in the East Wing after images spread online."
+          ]
+        },
+        biasRound: [
+          {
+            text: "Trump’s White House Ballroom Sparks Questions About Funding and Ethics",
+            answer: "left",
+            author: "FactCheck.org",
+            url: "https://www.factcheck.org/2025/10/trumps-white-house-ballroom-sparks-questions-about-funding-and-ethics",
+            image: "https://example.com/ethics-questions.jpg"
+          },
+          {
+            text: "Trump celebrates White House demolition as new ballroom rises: 'Music to my Ears'",
+            answer: "right",
+            author: "Fox News",
+            url: "https://www.foxnews.com/politics/trump-celebrates-white-house-demolition-new-ballroom-rises-music-my-ears",
+            image: "https://example.com/trump-smiling.jpg"
+          },
+          {
+            text: "Treasury Tells Employees Not to Share Photos of White House Ballroom Construction",
+            answer: "center",
+            author: "Wall Street Journal",
+            url: "https://www.wsj.com/politics/policy/treasury-tells-employees-not-to-share-photos-of-white-house-ballroom-construction-1d4f2c49",
+            image: "https://example.com/no-photos-memo.jpg"
+          }
+        ],
+        timelineEvents: [
+          { id: 1, text: "The White House Announces Ballroom Construction" },
+          { id: 2, text: "Demolition and Construction begin on the ballroom" },
+          { id: 3, text: "Many lawmakers, especially Democrats, denounce demolition" },
+          { id: 4, text: "Treasury Dept tells employees not to photograph construction" },
+          { id: 5, text: "Trump announces that the entire East Wing is to be demolished" }
+        ],
+        timelineLives: 3
       },
 
-      biasRound: [
-        {
-          text: "Trump’s White House Ballroom Sparks Questions About Funding and Ethics",
-          answer: "left",
-          author: "FactCheck.org",
-          url: "https://www.factcheck.org/2025/10/trumps-white-house-ballroom-sparks-questions-about-funding-and-ethics",
-          image: "https://example.com/ethics-questions.jpg"
-        },
-        {
-          text: "Trump celebrates White House demolition as new ballroom rises: 'Music to my Ears'",
-          answer: "right",
-          author: "Fox News",
-          url: "https://www.foxnews.com/politics/trump-celebrates-white-house-demolition-new-ballroom-rises-music-my-ears",
-          image: "https://example.com/trump-smiling.jpg"
-        },
-        {
-          text: "Treasury Tells Employees Not to Share Photos of White House Ballroom Construction",
-          answer: "center",
-          author: "Wall Street Journal",
-          url: "https://www.wsj.com/politics/policy/treasury-tells-employees-not-to-share-photos-of-white-house-ballroom-construction-1d4f2c49",
-          image: "https://example.com/no-photos-memo.jpg"
-        }
-      ],
+      /* You can edit Issue 2 & 3 content however you want.
+         Structure is the same: dateLabel, issueImage, issue, biasRound, timelineEvents, timelineLives. */
 
-      timelineEvents: [
-        { id: 1, text: "The White House Announces Ballroom Construction" },
-        { id: 2, text: "Demolition and Construction begin on the ballroom" },
-        { id: 3, text: "Many lawmakers, especially Democrats, denounce demolition" },
-        { id: 4, text: "Treasury Dept tells employees not to photograph construction" },
-        { id: 5, text: "Trump announces that the entire East Wing is to be demolished" }
-      ],
+      issue2: {
+        dateLabel: "10/09/2025",
+        issueImage: "https://example.com/agencies-court.jpg",
+        issueImageCreditDesc: "Illustration of the U.S. Supreme Court and federal agencies.",
+        issue: {
+          title: "Supreme Court & Agency Power",
+          summaryBullets: [
+            "The Supreme Court is weighing cases that could limit how independent federal agencies can be from the president.",
+            "Supporters say changes would rein in unaccountable bureaucrats; critics say it would give presidents too much direct control.",
+            "The rulings could affect everything from environmental rules to financial regulation for years to come."
+          ]
+        },
+        biasRound: [
+          {
+            text: "Court May Upend 90-Year Rule Limiting Presidents’ Control of Agencies",
+            answer: "left",
+            author: "AP News",
+            url: "https://example.com/court-upend-rule",
+            image: "https://example.com/court-upend.jpg"
+          },
+          {
+            text: "Justices Take Aim at ‘Unaccountable Bureaucrats’ as Agency Power Case Begins",
+            answer: "right",
+            author: "Conservative Daily",
+            url: "https://example.com/unaccountable-bureaucrats",
+            image: "https://example.com/agency-gavel.jpg"
+          },
+          {
+            text: "What the Supreme Court’s Agency Cases Could Mean for Future Presidents",
+            answer: "center",
+            author: "Reuters",
+            url: "https://example.com/future-presidents",
+            image: "https://example.com/neutral-court.jpg"
+          }
+        ],
+        timelineEvents: [
+          { id: 1, text: "A coalition of states challenges long-standing agency power precedent" },
+          { id: 2, text: "Supreme Court agrees to hear agency power cases" },
+          { id: 3, text: "Oral arguments focus on how much control presidents should have" },
+          { id: 4, text: "Court hands down ruling narrowing agency independence" },
+          { id: 5, text: "Congress debates new laws to respond to the decision" }
+        ],
+        timelineLives: 3
+      },
 
-      timelineLives: 3
+      issue3: {
+        dateLabel: "10/02/2025",
+        issueImage: "https://example.com/leaks-press.jpg",
+        issueImageCreditDesc: "Stock photo of microphones and reporters outside a government building.",
+        issue: {
+          title: "Speech, Leaks & Information Control",
+          summaryBullets: [
+            "New internal rules are drafted around how officials can speak publicly and what counts as an unauthorized leak.",
+            "Free-speech advocates warn the guidelines may chill whistleblowers and public criticism.",
+            "Supporters argue tighter rules are needed to protect sensitive information and maintain discipline inside agencies."
+          ]
+        },
+        biasRound: [
+          {
+            text: "Administration Cracks Down on ‘Disloyal’ Leakers and Critics Inside Government",
+            answer: "right",
+            author: "Patriot Wire",
+            url: "https://example.com/disloyal-leakers",
+            image: "https://example.com/leak-hunt.jpg"
+          },
+          {
+            text: "New Gag Rules Could Silence Whistleblowers, Civil Liberties Groups Warn",
+            answer: "left",
+            author: "Civil Liberty News",
+            url: "https://example.com/gag-rules",
+            image: "https://example.com/mic-tape.jpg"
+          },
+          {
+            text: "What the New Speech Rules Actually Say — and What They Don’t",
+            answer: "center",
+            author: "Nonpartisan Policy Review",
+            url: "https://example.com/speech-rules-text",
+            image: "https://example.com/paper-rules.jpg"
+          }
+        ],
+        timelineEvents: [
+          { id: 1, text: "Draft internal speech and leak guidelines circulate inside agencies" },
+          { id: 2, text: "Civil liberties groups publish open letter criticizing the draft" },
+          { id: 3, text: "Administration releases final version of speech and leak rules" },
+          { id: 4, text: "First test case: employee disciplined under new rules" },
+          { id: 5, text: "Federal court hears challenge to parts of the policy" }
+        ],
+        timelineLives: 3
+      }
     };
+
+    /* Current issue state */
+    let CURRENT = null;
 
     /* Helpers */
     const $ = (sel) => document.querySelector(sel);
@@ -852,47 +999,56 @@
       window.scrollTo({top:0,left:0,behavior:'instant'});
     }
 
-    /* HOME → SUMMARY */
-    $('#start-btn').addEventListener('click', () => {
-      $('#issue-title').textContent = `${CONFIG.dateLabel} · ${CONFIG.issue.title}`;
+    /* ========= ISSUE SELECTION (HOME → SUMMARY) ========= */
+    function loadSummaryForCurrent(){
+      if(!CURRENT) return;
+      $('#issue-title').textContent = `${CURRENT.dateLabel} · ${CURRENT.issue.title}`;
 
       const list = $('#issue-summary');
       list.innerHTML = '';
-      CONFIG.issue.summaryBullets.forEach(b => {
+      CURRENT.issue.summaryBullets.forEach(b => {
         const li = document.createElement('li');
         li.textContent = b;
         list.appendChild(li);
       });
 
-      if (CONFIG.issueImage && CONFIG.issueImage.trim() !== "") {
-        $('#issue-image').src = CONFIG.issueImage;
-        $('#issue-image').alt = CONFIG.issue.title || "Issue image";
+      if (CURRENT.issueImage && CURRENT.issueImage.trim() !== "") {
+        $('#issue-image').src = CURRENT.issueImage;
+        $('#issue-image').alt = CURRENT.issue.title || "Issue image";
         $('#issue-image-wrap').classList.remove('hidden');
 
-        $('#issue-image-credit-desc').textContent = CONFIG.issueImageCreditDesc || "";
-        $('#issue-image-credit-url').textContent = CONFIG.issueImage;
+        $('#issue-image-credit-desc').textContent = CURRENT.issueImageCreditDesc || "";
+        $('#issue-image-credit-url').textContent = CURRENT.issueImage;
         $('#issue-image-credit').classList.remove('hidden');
       } else {
         $('#issue-image-wrap').classList.add('hidden');
         $('#issue-image-credit').classList.add('hidden');
       }
+    }
 
-      showOnly('summary');
+    $$('.issue-card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.issue;
+        CURRENT = ISSUES[key];
+        loadSummaryForCurrent();
+        showOnly('summary');
+      });
     });
 
-    /* SUMMARY → BIAS */
+    /* ========= SUMMARY → BIAS ========= */
     $('#to-bias').addEventListener('click', () => {
       initBias();
       showOnly('bias');
     });
 
-    /* BIAS BUSTER */
+    /* ========= BIAS BUSTER ========= */
     const TOTAL = 3;
     let bbIndex = 0;
     let bbAnswered = 0;
     let bbScore = 0;
 
     function initBias(){
+      if(!CURRENT) return;
       bbIndex = 0;
       bbAnswered = 0;
       bbScore = 0;
@@ -907,7 +1063,7 @@
     }
 
     function showBBQuestion(){
-      const q = CONFIG.biasRound[bbIndex];
+      const q = CURRENT.biasRound[bbIndex];
 
       $('#headline').textContent = q.text;
 
@@ -943,7 +1099,7 @@
     }
 
     function handleBias(choice){
-      const q = CONFIG.biasRound[bbIndex];
+      const q = CURRENT.biasRound[bbIndex];
 
       $$('.option-btn').forEach(b => b.disabled = true);
 
@@ -971,8 +1127,8 @@
       btn.addEventListener('click', () => handleBias(btn.dataset.choice));
     });
 
-    /* TIMELINE */
-    let lives = CONFIG.timelineLives;
+    /* ========= TIMELINE ========= */
+    let lives = 0;
     let startLayout = [];
 
     function hearts(n){
@@ -983,9 +1139,10 @@
     }
 
     function initTimeline(){
-      lives = CONFIG.timelineLives;
+      if(!CURRENT) return;
+      lives = CURRENT.timelineLives;
       updateLives();
-      buildTimeline(shuffle([...CONFIG.timelineEvents]));
+      buildTimeline(shuffle([...CURRENT.timelineEvents]));
       $('#tl-score').textContent = '';
       $('#to-final-after-reveal').classList.add('hidden');
     }
@@ -1022,7 +1179,7 @@
       return $$('#event-list .event').map(n => parseInt(n.dataset.id,10));
     }
     function correctIds(){
-      return [...CONFIG.timelineEvents]
+      return [...CURRENT.timelineEvents]
         .sort((a,b)=>a.id - b.id)
         .map(e => e.id);
     }
@@ -1127,7 +1284,7 @@
     });
 
     function revealOrder(fromLoss=false){
-      const ordered = [...CONFIG.timelineEvents].sort((a,b)=>a.id - b.id);
+      const ordered = [...CURRENT.timelineEvents].sort((a,b)=>a.id - b.id);
       buildTimeline(ordered);
       scoreTimeline({reveal:true});
 
@@ -1141,20 +1298,20 @@
     $('#to-final-after-reveal').addEventListener('click', () => goFinal());
 
     $('#reshuffle').addEventListener('click', () => {
-      buildTimeline(shuffle([...CONFIG.timelineEvents]));
+      buildTimeline(shuffle([...CURRENT.timelineEvents]));
       $('#tl-score').textContent = '';
       $('#to-final-after-reveal').classList.add('hidden');
     });
 
     $('#reset-order').addEventListener('click', () => {
-      const byId = Object.fromEntries(CONFIG.timelineEvents.map(e => [e.id, e]));
+      const byId = Object.fromEntries(CURRENT.timelineEvents.map(e => [e.id, e]));
       const items = startLayout.map(id => byId[id]);
       buildTimeline(items);
       $('#tl-score').textContent = '';
       $('#to-final-after-reveal').classList.add('hidden');
     });
 
-    /* FINAL */
+    /* ========= FINAL ========= */
     function goFinal(){
       const livesLeft = Math.max(0, lives);
       const finalScore = bbScore + livesLeft;
@@ -1173,10 +1330,10 @@
       }
       $('#final-line').textContent = msg;
 
-      // Fill modal content
+      // Fill modal content with current issue's sources
       const fs = $('#final-sources');
       fs.innerHTML = '';
-      CONFIG.biasRound.forEach((item, i) => {
+      CURRENT.biasRound.forEach((item, i) => {
         const hist = $$('#answer-history .box')[i];
         const gotIt = hist ? hist.classList.contains('correct') : false;
         const row = document.createElement('div');
